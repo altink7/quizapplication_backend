@@ -1,13 +1,13 @@
-package at.technikum.bwengspringrestbackend;
+package at.technikum.springrestbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BwengSpringRestBackendApplication {
+public class SpringRestBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BwengSpringRestBackendApplication.class, args);
+        SpringApplication.run(SpringRestBackendApplication.class, args);
     }
 
 }

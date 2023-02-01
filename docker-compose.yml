@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_DIALECT: mariadb
+      DB_PORT: 3306
+      DB_NAME: spring
+      DB_USER: springuser
+      DB_PASSWORD: springpw
+    ports:
+      - "8080:8080"
+    networks:
+      - app
+
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: spring
+      MYSQL_USER: springuser
+      MYSQL_PASSWORD: springpw
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - app
+
+  minio:
+    image: minio/minio
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: miniopw
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio:/data
+    networks:
+      - app
+
+volumes:
+  db-data:
+  minio:
+
+networks:
+  app:

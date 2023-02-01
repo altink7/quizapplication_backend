@@ -1,10 +1,10 @@
-package at.technikum.bwengspringrestbackend;
+package at.technikum.springrestbackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BwengSpringRestBackendApplicationTests {
+class SpringRestBackendApplicationTests {
 
     @Test
     void contextLoads() {
