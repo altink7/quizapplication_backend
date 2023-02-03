@@ -12,19 +12,26 @@ This is the template project for the BWENG course.
   * Port 3306
 * MinIO container
   * Port 9000
+  * Port 9001 (Dashboard)
+
+## Already installed dependecies
+* springdoc-openapi
+  * /api (API json)
+  * /swagger.html (Swagger API UI)
 
 ## Setup
 Build Docker container
 ```shell
 docker-compose build
 ```
-Start Docker container
+Start Docker container (with build)
 ```shell
 docker-compose up
+docker-compose up --build
 ```
 Stop Docker container
 ```shell
-docker-compose down
+docker-compose stop
 ```
 Remove Docker container
 ```shell
