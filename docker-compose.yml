@@ -12,10 +12,18 @@ services:
       DB_NAME: spring
       DB_USER: springuser
       DB_PASSWORD: springpw
+      BUCKET_HOST: minio
+      BUCKET_PORT: 9000
+      BUCKET_ACCESS_KEY: minioadmin
+      BUCKET_ACCESS_SECRET: minioadminpw
+      BUCKET_NAME: files
     ports:
       - "8080:8080"
     networks:
       - app
+    depends_on:
+      - db
+      - minio
 
   db:
     image: mariadb
@@ -34,14 +42,31 @@ services:
   minio:
     image: minio/minio
     environment:
-      MINIO_ACCESS_KEY: minio
-      MINIO_SECRET_KEY: miniopw
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadminpw
     ports:
       - "9000:9000"
+      - "9001:9001"
     volumes:
       - minio:/data
     networks:
       - app
+    command: server --console-address ":9001" /data
+
+  # creates a default bucket called "files"
+  createfilebucket:
+    image: minio/mc
+    depends_on:
+      - minio
+    networks:
+      - app
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://minio:9000 minioadmin minioadminpw;
+      /usr/bin/mc mb myminio/files;
+      /usr/bin/mc policy set public myminio/files;
+      exit 0;
+      "
 
 volumes:
   db-data:
