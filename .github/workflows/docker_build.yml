@@ -23,3 +23,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: false
+          tags: bweng/app:latest
+          cache-from: type=registry,ref=bweng/app:latest
+          cache-to: type=inline
