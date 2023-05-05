@@ -40,10 +40,11 @@ services:
       - app
 
   minio:
-    image: minio/minio
+    image: bitnami/minio
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadminpw
+      MINIO_DEFAULT_BUCKETS: files
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -51,22 +52,6 @@ services:
       - minio:/data
     networks:
       - app
-    command: server --console-address ":9001" /data
-
-  # creates a default bucket called "files"
-  createfilebucket:
-    image: minio/mc
-    depends_on:
-      - minio
-    networks:
-      - app
-    entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc alias set myminio http://minio:9000 minioadmin minioadminpw;
-      /usr/bin/mc mb myminio/files;
-      /usr/bin/mc policy set public myminio/files;
-      exit 0;
-      "
 
 volumes:
   db-data:
