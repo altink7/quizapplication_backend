@@ -17,11 +17,6 @@ import java.util.List;
 public class QuizController {
     private QuizService quizService;
 
-    @Autowired
-    public void setQuizService(QuizService quizService) {
-        this.quizService = quizService;
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Quiz> getQuizById(@PathVariable Long id) {
         Quiz quiz = quizService.getQuizById(id);
@@ -61,5 +56,10 @@ public class QuizController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Autowired
+    public void setQuizService(QuizService quizService) {
+        this.quizService = quizService;
     }
 }
