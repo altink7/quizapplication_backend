@@ -1,7 +1,7 @@
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.dto.UserDTO;
-import at.technikum.springrestbackend.mapper.UserMapper;
+import at.technikum.springrestbackend.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,39 +15,39 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
     private UserService userService;
-    private UserMapper userMapper;
+    private InternalModelMapper mapper;
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
-        UserDTO userDTO = userMapper.mapToDTO(userService.getUserById(userId));
+        UserDTO userDTO = mapper.mapToDTO(userService.getUserById(userId), UserDTO.class);
         return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("/email")
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
-        UserDTO userDTO = userMapper.mapToDTO(userService.getUserByEmail(email));
+        UserDTO userDTO = mapper.mapToDTO(userService.getUserByEmail(email), UserDTO.class);
         return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> userDTOs = userService.getAllUsers().stream()
-                .map(userMapper::mapToDTO)
+                .map(user -> mapper.mapToDTO(user, UserDTO.class))
                 .toList();
         return ResponseEntity.ok(userDTOs);
     }
 
     @PostMapping("/create")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        User createdUser = userService.createUser(userMapper.mapToEntity(userDTO));
-        UserDTO createdUserDTO = userMapper.mapToDTO(createdUser);
+        User createdUser = userService.createUser(mapper.mapToEntity(userDTO, User.class));
+        UserDTO createdUserDTO = mapper.mapToDTO(createdUser, UserDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
     }
 
     @PutMapping("/{userId}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
-        User updatedUser = userService.updateUser(userId, userMapper.mapToEntity(userDTO));
-        UserDTO updatedUserDTO = userMapper.mapToDTO(updatedUser);
+        User updatedUser = userService.updateUser(userId, mapper.mapToEntity(userDTO, User.class));
+        UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);
         return ResponseEntity.ok(updatedUserDTO);
     }
 
@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @Autowired
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public void setMapper(InternalModelMapper mapper) {
+        this.mapper = mapper;
     }
 }

@@ -1,11 +1,17 @@
 package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,22 +36,34 @@ public class Quiz implements Serializable {
             joinColumns = @JoinColumn(name = "quiz_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+
+    @ToString.Exclude
     private List<User> participants;
 
+    @Column(name = "category")
     private Category category;
 
     @OneToMany(mappedBy = "quiz")
+    @ToString.Exclude
     private List<Question> questions;
 
-    private LocalDate creationDate;
-
+    @Column(name = "start_date")
     private LocalDate startDate;
 
+    @Column(name = "duration")
     private int duration;
 
     @ManyToOne
     @JoinColumn(name = "user_statistic_id")
     private UserStatistic userStatistic;
+
+    @CreatedDate
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Override
     public final boolean equals(Object o) {

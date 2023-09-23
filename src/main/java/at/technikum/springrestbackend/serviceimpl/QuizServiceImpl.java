@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -56,7 +55,6 @@ public class QuizServiceImpl implements QuizService {
         Quiz quiz = new Quiz();
         quiz.setCategory(category);
         quiz.setQuestions(questions);
-        quiz.setCreationDate(LocalDate.now());
         quiz.setCreator(user);
         return quiz;
     }

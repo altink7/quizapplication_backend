@@ -1,11 +1,16 @@
 package at.technikum.springrestbackend.model;
 
-import at.technikum.springrestbackend.repository.AnswerDao;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,12 +25,23 @@ public class UserStatistic implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @OneToMany(mappedBy = "userStatistic", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Quiz> quizList;
 
+    @Column(name = "points")
     private int points;
+
+    @CreatedDate
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Override
     public final boolean equals(Object o) {

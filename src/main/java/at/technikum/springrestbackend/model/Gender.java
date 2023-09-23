@@ -1,7 +1,10 @@
 package at.technikum.springrestbackend.model;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 
+@Getter
 public enum Gender implements Serializable {
     MALE(1),
     FEMALE(2),
@@ -11,9 +14,5 @@ public enum Gender implements Serializable {
 
     Gender(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 }

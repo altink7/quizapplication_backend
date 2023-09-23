@@ -1,10 +1,16 @@
 package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -22,11 +28,20 @@ public class AnswerOption implements Serializable {
     @JoinColumn(name = "answer_id")
     private Answer answer;
 
+    @Column(name = "correct")
     private boolean isCorrect;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
+
+    @CreatedDate
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Override
     public final boolean equals(Object o) {
