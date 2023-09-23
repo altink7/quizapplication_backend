@@ -11,6 +11,13 @@ public enum Category implements Serializable {
     NATURE(5),
     RANDOM(6);
 
-    Category(int i) {
+    private final int value;
+
+    Category(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
