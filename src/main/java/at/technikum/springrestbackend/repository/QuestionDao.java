@@ -5,7 +5,9 @@ import at.technikum.springrestbackend.model.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface QuestionDao extends JpaRepository<Question, Long> {
-    Question findByCategory(Category category);
+    Optional<Question> findByCategory(Category category);
 }

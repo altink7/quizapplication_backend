@@ -21,6 +21,11 @@ public class QuestionController {
     @GetMapping("/all")
     public ResponseEntity<Object> getAllQuestions() {
         Object questions = questionService.getAllQuestions();
+
+        if (questions == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(questions);
     }
 
@@ -32,6 +37,7 @@ public class QuestionController {
     @GetMapping("/category/{category}")
     public ResponseEntity<Object> getQuestionByCategory(@PathVariable Category category) {
         Object question = questionService.getQuestionByCategory(category);
+
         if (question != null) {
             return ResponseEntity.ok(question);
         } else {

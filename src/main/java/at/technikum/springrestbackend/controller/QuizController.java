@@ -19,33 +19,54 @@ public class QuizController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Quiz> getQuizById(@PathVariable Long id) {
-        Quiz quiz = quizService.getQuizById(id);
-        return ResponseEntity.ok(quiz);
+        try {
+            Quiz quiz = quizService.getQuizById(id);
+            return ResponseEntity.ok(quiz);
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/byCategory")
     public ResponseEntity<Quiz> getQuizByCategory(@RequestParam Category category) {
-        Quiz quiz = quizService.getQuizByCategory(category);
-        return ResponseEntity.ok(quiz);
+        try{
+            Quiz quiz = quizService.getQuizByCategory(category);
+            return ResponseEntity.ok(quiz);
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/create")
     public ResponseEntity<Quiz> createQuiz(
             @RequestBody User user, @RequestBody Category category, @RequestBody List<Question> questions) {
-        Quiz createdQuiz = quizService.createQuiz(user, category, questions);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdQuiz);
+        try{
+            Quiz createdQuiz = quizService.createQuiz(user, category, questions);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdQuiz);
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Quiz>> getAllQuizzes() {
         List<Quiz> quizzes = quizService.getAllQuizzes();
+
+        if(quizzes.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(quizzes);
     }
 
     @GetMapping("/{id}/questions")
     public ResponseEntity<List<Question>> getAllQuestionsByQuizId(@PathVariable Long id) {
-        List<Question> questions = quizService.getAllQuestionsByQuizId(id);
-        return ResponseEntity.ok(questions);
+        try {
+            List<Question> questions = quizService.getAllQuestionsByQuizId(id);
+            return ResponseEntity.ok(questions);
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")

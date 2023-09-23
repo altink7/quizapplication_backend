@@ -8,7 +8,6 @@ import at.technikum.springrestbackend.repository.QuizDao;
 import at.technikum.springrestbackend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.util.List;
 
@@ -18,12 +17,12 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public Quiz getQuizById(Long id) {
-        return quizDao.findById(id).orElseThrow(() -> new NotFoundException("Quiz not found"));
+        return quizDao.findById(id).orElseThrow(() -> new RuntimeException("Quiz not found"));
     }
 
     @Override
     public Quiz getQuizByCategory(Category category) {
-        return quizDao.findByCategory(category);
+        return quizDao.findByCategory(category).orElseThrow(() -> new RuntimeException("Quiz not found"));
     }
 
     @Override
@@ -39,7 +38,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public List<Question> getAllQuestionsByQuizId(Long id) {
-        return quizDao.findById(id).orElseThrow(() -> new NotFoundException("Quiz not found")).getQuestions();
+        return quizDao.findById(id).orElseThrow(() -> new RuntimeException("Quiz not found")).getQuestions();
     }
 
     @Override

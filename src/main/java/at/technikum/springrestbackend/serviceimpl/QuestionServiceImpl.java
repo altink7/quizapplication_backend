@@ -15,7 +15,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question getQuestionByCategory(Category category) {
-        return questionDao.findByCategory(category);
+        return questionDao.findByCategory(category).orElseThrow(() -> new RuntimeException("Question not found"));
     }
 
     @Override

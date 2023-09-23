@@ -11,7 +11,7 @@ public class UserStatisticServiceImpl implements UserStatisticService {
     private UserStatisticDao userStatisticDao;
     @Override
     public UserStatistic getUserStatisticByUserId(Long userId) {
-        return userStatisticDao.findByUserId(userId);
+        return userStatisticDao.findByUserId(userId).orElseThrow(() -> new RuntimeException("User Statistic not found"));
     }
 
     @Autowired
