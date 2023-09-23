@@ -7,6 +7,13 @@ public enum Gender implements Serializable {
     FEMALE(2),
     OTHER(3);
 
-    Gender(int i) {
+    private final int value;
+
+    Gender(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
