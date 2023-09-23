@@ -7,6 +7,13 @@ public enum Role implements Serializable {
     USER(0),
     ADMIN(1);
 
-    Role(int i) {
+    private final int value;
+
+    Role(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
