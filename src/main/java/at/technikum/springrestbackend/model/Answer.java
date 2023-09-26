@@ -37,6 +37,10 @@ public class Answer implements Serializable {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public Answer(String answer) {
+        this.answer = answer;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

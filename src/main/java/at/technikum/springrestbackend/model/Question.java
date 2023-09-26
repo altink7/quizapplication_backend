@@ -26,6 +26,7 @@ public class Question implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(unique = true, name = "question")
     private String question;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)

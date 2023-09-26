@@ -21,4 +21,25 @@ public interface QuestionService {
      * @return  the list of questions
      */
     List<Question> getAllQuestions();
+
+    /**
+     * Create a question
+     * @param question the question
+     * @return the created question
+     */
+    Question createQuestion(Question question);
+
+    /**
+     * Delete a question
+     * @param id the id
+     * @return true if deleted
+     */
+    boolean deleteQuestion(Long id);
+
+    /**
+     * Update a question
+     * @param question the question
+     * @return the updated question
+     */
+    Question updateQuestion(Question question);
 }

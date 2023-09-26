@@ -5,12 +5,15 @@ import at.technikum.springrestbackend.repository.UserDao;
 import at.technikum.springrestbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import at.technikum.springrestbackend.validator.modelvalidator.UserValidator;
 
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
+    private UserValidator userValidator;
+
     @Override
     public List<User> getAllUsers() {
         return userDao.findAll();
@@ -34,8 +37,9 @@ public class UserServiceImpl implements UserService {
         }).orElse(false);
     }
 
-    @Override
     public User createUser(User user) {
+        userValidator.validate(user);
+
         return userDao.save(user);
     }
 
@@ -53,5 +57,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    @Autowired
+    public void setUserValidator(UserValidator userValidator) {
+        this.userValidator = userValidator;
     }
 }

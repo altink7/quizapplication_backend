@@ -3,7 +3,6 @@ package at.technikum.springrestbackend.service;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
-import at.technikum.springrestbackend.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,12 +26,11 @@ public interface QuizService {
 
     /**
      * Create a new quiz
-     * @param user the user
-     * @param category the category
-     * @param questions the questions
+     *
+     * @param quiz quiz
      * @return the created quiz
      */
-    Quiz createQuiz(User user, Category category, List<Question> questions);
+    Quiz createQuiz(Quiz quiz);
 
     /**
      * Get all quizzes

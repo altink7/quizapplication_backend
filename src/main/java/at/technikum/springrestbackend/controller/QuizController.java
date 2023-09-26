@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.controller;
 
+import at.technikum.springrestbackend.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/quiz")
 public class QuizController {
     private QuizService quizService;
+    private InternalModelMapper mapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<Quiz> getQuizById(@PathVariable Long id) {
@@ -38,11 +40,11 @@ public class QuizController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Quiz> createQuiz(
-            @RequestBody User user, @RequestBody Category category, @RequestBody List<Question> questions) {
+    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
         try{
-            Quiz createdQuiz = quizService.createQuiz(user, category, questions);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdQuiz);
+            Quiz quizEntity = mapper.mapToEntity(quiz, Quiz.class);
+            Quiz createdQuiz = quizService.createQuiz(quizEntity);
+            return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(createdQuiz, Quiz.class));
         } catch (Exception e){
             return ResponseEntity.notFound().build();
         }
@@ -82,5 +84,10 @@ public class QuizController {
     @Autowired
     public void setQuizService(QuizService quizService) {
         this.quizService = quizService;
+    }
+
+    @Autowired
+    public void setMapper(InternalModelMapper mapper) {
+        this.mapper = mapper;
     }
 }

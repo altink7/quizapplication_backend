@@ -4,6 +4,8 @@ import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
 import at.technikum.springrestbackend.model.User;
+import at.technikum.springrestbackend.repository.AnswerDao;
+import at.technikum.springrestbackend.repository.AnswerOptionDao;
 import at.technikum.springrestbackend.repository.QuizDao;
 import at.technikum.springrestbackend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import java.util.List;
 @Service
 public class QuizServiceImpl implements QuizService {
     private QuizDao quizDao;
+    private AnswerOptionDao answerOptionDao;
+    private AnswerDao answerDao;
 
     @Override
     public Quiz getQuizById(Long id) {
@@ -26,8 +30,8 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public Quiz createQuiz(User user, Category category, List<Question> questions) {
-        return quizDao.save(getQuizForCategoryUser(user, category, questions));
+    public Quiz createQuiz(Quiz quiz) {
+        return quizDao.save(quiz);
     }
 
 
@@ -43,23 +47,36 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public boolean deleteQuiz(Long id) {
-        return quizDao.findById(id).map(quiz -> {
-            quizDao.delete(quiz);
-            return true;
-        }).orElse(false);
+        return quizDao.findById(id).map(this::deleteQuiz).orElse(false);
     }
 
 
-    private static Quiz getQuizForCategoryUser(User user, Category category, List<Question> questions) {
+    private Quiz getQuizForCategoryUser(User user, Category category, List<Question> questions) {
         Quiz quiz = new Quiz();
         quiz.setCategory(category);
+
+        questions.forEach(question -> {
+            question.getAnswerOptions().forEach(answerOption -> answerDao.save(answerOption.getAnswer()));
+            answerOptionDao.saveAll(question.getAnswerOptions());
+        });
+
         quiz.setQuestions(questions);
         quiz.setCreator(user);
         return quiz;
     }
 
+    private Boolean deleteQuiz(Quiz quiz) {
+        quizDao.delete(quiz);
+        return true;
+    }
+
     @Autowired
     public void setQuizDao(QuizDao quizDao) {
         this.quizDao = quizDao;
+    }
+
+    @Autowired
+    public void setAnswerOptionDao(AnswerOptionDao answerOptionDao) {
+        this.answerOptionDao = answerOptionDao;
     }
 }

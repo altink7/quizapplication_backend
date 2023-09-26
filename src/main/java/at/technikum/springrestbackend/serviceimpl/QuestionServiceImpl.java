@@ -23,6 +23,26 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDao.findAll();
     }
 
+    @Override
+    public Question createQuestion(Question question) {
+        return questionDao.save(question);
+    }
+
+    @Override
+    public boolean deleteQuestion(Long id) {
+        return questionDao.findById(id).map(this::deleteQuestion).orElse(false);
+    }
+
+    @Override
+    public Question updateQuestion(Question question) {
+        return questionDao.save(question);
+    }
+
+    private Boolean deleteQuestion(Question question) {
+        questionDao.delete(question);
+        return true;
+    }
+
     @Autowired
     public void setQuestionDao(QuestionDao questionDao) {
         this.questionDao = questionDao;
