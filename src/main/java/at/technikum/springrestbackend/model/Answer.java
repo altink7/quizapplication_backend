@@ -26,6 +26,8 @@ public class Answer implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    //test for push
+
     @Column(name = "answer", nullable = false)
     private String answer;
 
