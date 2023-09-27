@@ -24,9 +24,9 @@ public class QuestionController {
 
         if (questions == null) {
             return ResponseEntity.notFound().build();
+        }else {
+            return ResponseEntity.ok(questions);
         }
-
-        return ResponseEntity.ok(questions);
     }
 
     /**
@@ -38,10 +38,11 @@ public class QuestionController {
     public ResponseEntity<Object> getQuestionByCategory(@PathVariable Category category) {
         Object question = questionService.getQuestionByCategory(category);
 
-        if (question != null) {
-            return ResponseEntity.ok(question);
-        } else {
+        if (question == null) {
             return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(question);
+
         }
     }
 

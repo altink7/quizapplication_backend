@@ -21,10 +21,10 @@ public class UserStatisticController {
     @GetMapping("/{userId}")
     public ResponseEntity<Object> getUserStatisticByUserId(@PathVariable String userId) {
         Object userStatistic = userStatisticService.getUserStatisticByUserId(Long.valueOf(userId));
-        if (userStatistic != null) {
-            return ResponseEntity.ok(userStatistic);
-        } else {
+        if (userStatistic == null) {
             return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(userStatistic);
         }
     }
 
