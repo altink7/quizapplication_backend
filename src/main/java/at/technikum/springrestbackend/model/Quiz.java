@@ -19,7 +19,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity
+@Entity(name = "quiz")
 public class Quiz implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class Quiz implements Serializable {
     @ToString.Exclude
     private List<User> participants;
 
-    @Column(name = "category")
+    @Column(name = "category", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "quiz")

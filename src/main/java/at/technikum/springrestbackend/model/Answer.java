@@ -18,7 +18,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity
+@Entity(name = "answer")
 public class Answer implements Serializable {
 
     @Id
@@ -26,7 +26,7 @@ public class Answer implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "answer")
+    @Column(name = "answer", nullable = false)
     private String answer;
 
     @CreatedDate

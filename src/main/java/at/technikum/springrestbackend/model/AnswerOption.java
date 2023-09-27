@@ -17,7 +17,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity
+@Entity(name = "answer_option")
 public class AnswerOption implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +25,14 @@ public class AnswerOption implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "answer_id")
+    @JoinColumn(name = "answer_id", nullable = false)
     private Answer answer;
 
     @Column(name = "correct")
     private boolean isCorrect;
 
     @ManyToOne
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
     @CreatedDate

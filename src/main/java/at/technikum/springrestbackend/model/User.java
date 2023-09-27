@@ -17,12 +17,12 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity
+@Entity(name = "user")
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "salutation")
@@ -34,10 +34,10 @@ public class User implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", unique=true)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "country")

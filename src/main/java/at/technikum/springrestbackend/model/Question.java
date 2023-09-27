@@ -19,14 +19,14 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity
+@Entity(name = "question")
 public class Question implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(unique = true, name = "question")
+    @Column(unique = true, name = "question", nullable = false)
     private String question;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
@@ -37,10 +37,10 @@ public class Question implements Serializable {
     private File file;
 
     @ManyToOne
-    @JoinColumn(name = "quiz_id")
+    @JoinColumn(name = "quiz_id", nullable = false)
     private Quiz quiz;
 
-    @Column(name = "category")
+    @Column(name = "category", nullable = false)
     private Category category;
 
     @CreatedDate
