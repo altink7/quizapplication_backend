@@ -3,6 +3,7 @@ package at.technikum.springrestbackend.serviceimpl;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.UserDao;
 import at.technikum.springrestbackend.service.UserService;
+import at.technikum.springrestbackend.validator.annotation.ValidateWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import at.technikum.springrestbackend.validator.modelvalidator.UserValidator;
@@ -12,7 +13,6 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private UserDao userDao;
-    private UserValidator userValidator;
 
     @Override
     public List<User> getAllUsers() {
@@ -37,9 +37,8 @@ public class UserServiceImpl implements UserService {
         }).orElse(false);
     }
 
+    @ValidateWith(UserValidator.class)
     public User createUser(User user) {
-        userValidator.validate(user);
-
         return userDao.save(user);
     }
 
@@ -57,10 +56,5 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
-    }
-
-    @Autowired
-    public void setUserValidator(UserValidator userValidator) {
-        this.userValidator = userValidator;
     }
 }
