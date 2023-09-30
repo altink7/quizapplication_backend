@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin
 public class UserController {
     private UserService userService;
     private InternalModelMapper mapper;

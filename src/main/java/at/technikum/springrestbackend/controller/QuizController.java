@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/quiz")
+@CrossOrigin
 public class QuizController {
     private QuizService quizService;
     private InternalModelMapper mapper;

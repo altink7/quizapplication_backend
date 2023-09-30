@@ -1,9 +1,7 @@
 package at.technikum.springrestbackend.serviceimpl;
 
-import at.technikum.springrestbackend.model.Category;
-import at.technikum.springrestbackend.model.Question;
-import at.technikum.springrestbackend.model.Quiz;
-import at.technikum.springrestbackend.model.User;
+import at.technikum.springrestbackend.model.*;
+import at.technikum.springrestbackend.repository.QuestionDao;
 import at.technikum.springrestbackend.repository.AnswerDao;
 import at.technikum.springrestbackend.repository.AnswerOptionDao;
 import at.technikum.springrestbackend.repository.QuizDao;
@@ -16,6 +14,7 @@ import java.util.List;
 @Service
 public class QuizServiceImpl implements QuizService {
     private QuizDao quizDao;
+    private QuestionDao questionDao;
     private AnswerOptionDao answerOptionDao;
     private AnswerDao answerDao;
 
@@ -50,21 +49,6 @@ public class QuizServiceImpl implements QuizService {
         return quizDao.findById(id).map(this::deleteQuiz).orElse(false);
     }
 
-
-    private Quiz getQuizForCategoryUser(User user, Category category, List<Question> questions) {
-        Quiz quiz = new Quiz();
-        quiz.setCategory(category);
-
-        questions.forEach(question -> {
-            question.getAnswerOptions().forEach(answerOption -> answerDao.save(answerOption.getAnswer()));
-            answerOptionDao.saveAll(question.getAnswerOptions());
-        });
-
-        quiz.setQuestions(questions);
-        quiz.setCreator(user);
-        return quiz;
-    }
-
     private Boolean deleteQuiz(Quiz quiz) {
         quizDao.delete(quiz);
         return true;
@@ -76,7 +60,19 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Autowired
+    public void setQuestionDao(QuestionDao questionDao) {
+        this.questionDao = questionDao;
+    }
+
+    @Autowired
     public void setAnswerOptionDao(AnswerOptionDao answerOptionDao) {
         this.answerOptionDao = answerOptionDao;
     }
+
+    @Autowired
+    public void setAnswerDao(AnswerDao answerDao) {
+        this.answerDao = answerDao;
+    }
+
+
 }
