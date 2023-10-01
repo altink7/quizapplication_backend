@@ -9,20 +9,38 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of the QuestionService interface
+ */
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
     private QuestionDao questionDao;
 
+    /**
+     * Get a question by category
+     * @param category the category
+     * @return the question
+     */
     @Override
     public Question getQuestionByCategory(Category category) {
         return questionDao.findByCategory(category).orElseThrow(() -> new RuntimeException("Question not found"));
     }
 
+    /**
+     * Get all questions
+     * @return  the list of questions
+     */
     @Override
     public List<Question> getAllQuestions() {
         return questionDao.findAll();
     }
 
+    /**
+     * Create a question
+     * @param question the question
+     * @return the created question
+     */
     @Override
     public Question createQuestion(Question question) {
         return questionDao.save(question);
@@ -33,16 +51,30 @@ public class QuestionServiceImpl implements QuestionService {
         return questionDao.findById(id).map(this::deleteQuestion).orElse(false);
     }
 
+    /**
+     * Update a question
+     * @param question the question
+     * @return the updated question
+     */
     @Override
     public Question updateQuestion(Question question) {
         return questionDao.save(question);
     }
 
+    /**
+     * Delete a question
+     * @param question the question
+     * @return true if deleted
+     */
     private Boolean deleteQuestion(Question question) {
         questionDao.delete(question);
         return true;
     }
 
+    /**
+     * Sets the QuestionDao implementation to be used by this service.
+     * @param questionDao The QuestionDao implementation.
+     */
     @Autowired
     public void setQuestionDao(QuestionDao questionDao) {
         this.questionDao = questionDao;

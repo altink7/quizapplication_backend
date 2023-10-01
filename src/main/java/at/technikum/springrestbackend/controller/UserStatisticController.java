@@ -28,6 +28,10 @@ public class UserStatisticController {
         }
     }
 
+    /**
+     * Set the UserStatisticService.
+     * @param userStatisticService The UserStatisticService to set.
+     */
     @Autowired
     public void setUserStatisticService(UserStatisticService userStatisticService) {
         this.userStatisticService = userStatisticService;

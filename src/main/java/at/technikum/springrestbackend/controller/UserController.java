@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST Controller for managing users.
+ */
 @RestController
 @RequestMapping("/api/user")
 @CrossOrigin
@@ -18,6 +21,11 @@ public class UserController {
     private UserService userService;
     private InternalModelMapper mapper;
 
+    /**
+     * Get a user by their ID.
+     * @param userId The ID of the user.
+     * @return A ResponseEntity containing the user's DTO if found, or a "not found" response.
+     */
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
         try{
@@ -28,6 +36,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Get a user by their email.
+     * @param email The email address of the user.
+     * @return A ResponseEntity containing the user's DTO if found, or a "not found" response.
+     */
     @GetMapping("/email")
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
         try{
@@ -38,6 +51,10 @@ public class UserController {
         }
     }
 
+    /**
+     * Get a list of all users.
+     * @return A ResponseEntity containing a list of user DTOs if found, or a "not found" response.
+     */
     @GetMapping("/all")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> userDTOs = userService.getAllUsers().stream()
@@ -51,6 +68,11 @@ public class UserController {
         return ResponseEntity.ok(userDTOs);
     }
 
+    /**
+     * Create a new user.
+     * @param userDTO The user DTO to create.
+     * @return A ResponseEntity containing the created user's DTO if successful, or a "bad request" response if there is an issue with the request.
+     */
     @PostMapping("/create")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         try {
@@ -63,6 +85,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Update a user.
+     * @param userId The ID of the user to update.
+     * @param userDTO The user DTO to update.
+     * @return A ResponseEntity containing the updated user's DTO if successful, or a "not found" response if the user was not found.
+     */
     @PutMapping("/{userId}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
         try {
@@ -76,6 +104,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Delete a user.
+     * @param userId The ID of the user to delete.
+     * @return A ResponseEntity containing no content if successful, or a "not found" response if the user was not found.
+     */
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
         boolean deleted = userService.deleteUser(userId);
@@ -86,11 +119,19 @@ public class UserController {
         }
     }
 
+    /**
+     * Set the UserService.
+     * @param userService The UserService to set.
+     */
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Set the InternalModelMapper.
+     * @param mapper The InternalModelMapper to set.
+     */
     @Autowired
     public void setMapper(InternalModelMapper mapper) {
         this.mapper = mapper;

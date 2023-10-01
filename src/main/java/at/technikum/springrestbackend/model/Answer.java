@@ -23,6 +23,7 @@ import java.util.Objects;
 @EntityListeners(AuditingEntityListener.class)
 public class Answer implements Serializable {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
