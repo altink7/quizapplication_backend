@@ -5,6 +5,7 @@ import at.technikum.springrestbackend.model.Question;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class AnswerOptionDTO {
@@ -12,6 +13,6 @@ public class AnswerOptionDTO {
     private Answer answer;
     private boolean isCorrect;
     private Question question;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

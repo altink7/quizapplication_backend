@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,6 +18,6 @@ public class QuestionDTO {
     private File file;
     private Quiz quiz;
     private Category category;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

@@ -5,6 +5,7 @@ import at.technikum.springrestbackend.model.Role;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class UserDTO {
@@ -16,6 +17,6 @@ public class UserDTO {
     private String password;
     private String country;
     private Role role;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
