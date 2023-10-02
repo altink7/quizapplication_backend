@@ -1,8 +1,8 @@
 package at.technikum.springrestbackend.controller;
 
+import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.QuestionDTO;
 import at.technikum.springrestbackend.exceptions.QuizExceptions;
-import at.technikum.springrestbackend.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.service.QuestionService;

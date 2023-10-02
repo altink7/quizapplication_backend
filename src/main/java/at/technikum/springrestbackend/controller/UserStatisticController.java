@@ -1,7 +1,7 @@
 package at.technikum.springrestbackend.controller;
 
+import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.UserStatisticDTO;
-import at.technikum.springrestbackend.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.model.UserStatistic;
 import at.technikum.springrestbackend.service.UserStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
