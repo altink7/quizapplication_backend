@@ -29,7 +29,7 @@ public class Quiz implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="creator_id")
+    @JoinColumn(name = "creator_id")
     private User creator;
 
     @ManyToMany
