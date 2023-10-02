@@ -4,9 +4,6 @@ import at.technikum.springrestbackend.model.Gender;
 import at.technikum.springrestbackend.model.Role;
 import lombok.Data;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 @Data
 public class UserDTO {
     private Long id;
@@ -17,6 +14,4 @@ public class UserDTO {
     private String password;
     private String country;
     private Role role;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

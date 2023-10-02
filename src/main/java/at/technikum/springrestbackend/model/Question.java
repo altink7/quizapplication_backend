@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +29,10 @@ public class Question implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(unique = true, name = "question", nullable = false)
+    @Column(name = "question", nullable = false)
     private String question;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question")
     @ToString.Exclude
     private List<AnswerOption> answerOptions;
 

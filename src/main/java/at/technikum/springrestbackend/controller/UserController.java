@@ -74,7 +74,7 @@ public class UserController {
      * @return A ResponseEntity containing the created user's DTO if successful, or a "bad request" response if there is an issue with the request.
      */
     @PostMapping("/create")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Object> createUser(@RequestBody UserDTO userDTO) {
         try {
             User createdUser = userService.createUser(mapper.mapToEntity(userDTO, User.class));
             UserDTO createdUserDTO = mapper.mapToDTO(createdUser, UserDTO.class);
@@ -92,7 +92,7 @@ public class UserController {
      * @return A ResponseEntity containing the updated user's DTO if successful, or a "not found" response if the user was not found.
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<Object> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
         try {
             User updatedUser = userService.updateUser(userId, mapper.mapToEntity(userDTO, User.class));
             UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);

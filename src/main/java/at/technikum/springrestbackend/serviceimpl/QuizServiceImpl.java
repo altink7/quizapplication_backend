@@ -36,7 +36,21 @@ public class QuizServiceImpl implements QuizService {
     @Override
     @Transactional
     public Quiz createQuiz(Quiz quiz) {
-        return quizDao.save(quiz);
+        Quiz persistedQuiz = quizDao.save(quiz);
+        quiz.getQuestions().forEach(question -> {
+
+            question.setQuiz(quiz);
+            questionDao.save(question);
+
+
+            question.getAnswerOptions().forEach(answerOption -> {
+                Answer answer = answerOption.getAnswer();
+                answerDao.save(answer);
+                answerOption.setQuestion(question);
+                answerOptionDao.save(answerOption);
+            });
+        });
+        return persistedQuiz;
     }
 
     @Override

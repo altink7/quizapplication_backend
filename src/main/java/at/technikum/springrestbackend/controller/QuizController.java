@@ -30,7 +30,7 @@ public class QuizController {
      * @return A ResponseEntity containing the quiz if found, or a "not found" response.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
+    public ResponseEntity<Object> getQuizById(@PathVariable Long id) {
         try {
             Quiz quiz = quizService.getQuizById(id);
             return ResponseEntity.ok(mapper.mapToDTO(quiz, QuizDTO.class));
@@ -45,7 +45,7 @@ public class QuizController {
      * @return A ResponseEntity containing the quiz if found, or a "not found" response.
      */
     @GetMapping("/byCategory")
-    public ResponseEntity<QuizDTO> getQuizByCategory(@RequestParam Category category) {
+    public ResponseEntity<Object> getQuizByCategory(@RequestParam Category category) {
         try{
             Quiz quiz = quizService.getQuizByCategory(category);
             return ResponseEntity.ok(mapper.mapToDTO(quiz, QuizDTO.class));
@@ -60,11 +60,11 @@ public class QuizController {
      * @return A ResponseEntity containing the created quiz if successful, or a "not found" response.
      */
     @PostMapping("/create")
-    public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quiz) {
+    public ResponseEntity<Object> createQuiz(@RequestBody QuizDTO quiz) {
         try{
             Quiz quizEntity = mapper.mapToEntity(quiz, Quiz.class);
             Quiz createdQuiz = quizService.createQuiz(quizEntity);
-            return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(createdQuiz, QuizDTO.class));
+            return ResponseEntity.status(HttpStatus.CREATED).body(quizService.getQuizById(createdQuiz.getId()));
         } catch (Exception e){
             return ResponseEntity.notFound().build();
         }
@@ -75,7 +75,7 @@ public class QuizController {
      * @return A ResponseEntity containing a list of quizzes if found, or a "not found" response.
      */
     @GetMapping("/all")
-    public ResponseEntity<List<Quiz>> getAllQuizzes() {
+    public ResponseEntity<Object> getAllQuizzes() {
         List<Quiz> quizzes = quizService.getAllQuizzes();
 
         if(quizzes.isEmpty()){
@@ -90,7 +90,7 @@ public class QuizController {
      * @return A ResponseEntity containing a list of questions if found, or a "not found" response.
      */
     @GetMapping("/{id}/questions")
-    public ResponseEntity<List<Question>> getAllQuestionsByQuizId(@PathVariable Long id) {
+    public ResponseEntity<Object> getAllQuestionsByQuizId(@PathVariable Long id) {
         try {
             List<Question> questions = quizService.getAllQuestionsByQuizId(id);
             return ResponseEntity.ok(questions);
