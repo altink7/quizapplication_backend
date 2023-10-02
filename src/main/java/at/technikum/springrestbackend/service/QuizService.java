@@ -12,6 +12,7 @@ public interface QuizService {
 
     /**
      * Get a quiz by id
+     *
      * @param id the quiz id
      * @return the quiz
      */
@@ -19,6 +20,7 @@ public interface QuizService {
 
     /**
      * Get a quiz by category
+     *
      * @param category the category
      * @return the quiz
      */
@@ -34,12 +36,14 @@ public interface QuizService {
 
     /**
      * Get all quizzes
+     *
      * @return the list of quizzes
      */
     List<Quiz> getAllQuizzes();
 
     /**
      * Get all questions by quiz id
+     *
      * @param id the quiz id
      * @return the list of questions
      */
@@ -47,6 +51,7 @@ public interface QuizService {
 
     /**
      * Delete a quiz by id
+     *
      * @param id the quiz id
      * @return true if the quiz was deleted, false otherwise
      */

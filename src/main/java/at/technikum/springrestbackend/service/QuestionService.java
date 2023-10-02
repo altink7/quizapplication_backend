@@ -11,6 +11,7 @@ public interface QuestionService {
 
     /**
      * Get a question by category
+     *
      * @param category the category
      * @return the question
      */
@@ -18,12 +19,14 @@ public interface QuestionService {
 
     /**
      * Get all questions
-     * @return  the list of questions
+     *
+     * @return the list of questions
      */
     List<Question> getAllQuestions();
 
     /**
      * Create a question
+     *
      * @param question the question
      * @return the created question
      */
@@ -31,6 +34,7 @@ public interface QuestionService {
 
     /**
      * Delete a question
+     *
      * @param id the id
      * @return true if deleted
      */
@@ -38,6 +42,7 @@ public interface QuestionService {
 
     /**
      * Update a question
+     *
      * @param question the question
      * @return the updated question
      */
