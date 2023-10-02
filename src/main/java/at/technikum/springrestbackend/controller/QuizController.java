@@ -1,10 +1,10 @@
 package at.technikum.springrestbackend.controller;
 
+import at.technikum.springrestbackend.dto.QuizDTO;
 import at.technikum.springrestbackend.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
-import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,10 +30,10 @@ public class QuizController {
      * @return A ResponseEntity containing the quiz if found, or a "not found" response.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Quiz> getQuizById(@PathVariable Long id) {
+    public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
         try {
             Quiz quiz = quizService.getQuizById(id);
-            return ResponseEntity.ok(quiz);
+            return ResponseEntity.ok(mapper.mapToDTO(quiz, QuizDTO.class));
         } catch (Exception e){
             return ResponseEntity.notFound().build();
         }
@@ -45,10 +45,10 @@ public class QuizController {
      * @return A ResponseEntity containing the quiz if found, or a "not found" response.
      */
     @GetMapping("/byCategory")
-    public ResponseEntity<Quiz> getQuizByCategory(@RequestParam Category category) {
+    public ResponseEntity<QuizDTO> getQuizByCategory(@RequestParam Category category) {
         try{
             Quiz quiz = quizService.getQuizByCategory(category);
-            return ResponseEntity.ok(quiz);
+            return ResponseEntity.ok(mapper.mapToDTO(quiz, QuizDTO.class));
         } catch (Exception e){
             return ResponseEntity.notFound().build();
         }
@@ -60,11 +60,11 @@ public class QuizController {
      * @return A ResponseEntity containing the created quiz if successful, or a "not found" response.
      */
     @PostMapping("/create")
-    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
+    public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quiz) {
         try{
             Quiz quizEntity = mapper.mapToEntity(quiz, Quiz.class);
             Quiz createdQuiz = quizService.createQuiz(quizEntity);
-            return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(createdQuiz, Quiz.class));
+            return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(createdQuiz, QuizDTO.class));
         } catch (Exception e){
             return ResponseEntity.notFound().build();
         }

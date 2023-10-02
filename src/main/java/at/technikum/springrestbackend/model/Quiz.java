@@ -38,7 +38,6 @@ public class Quiz implements Serializable {
             joinColumns = @JoinColumn(name = "quiz_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-
     @ToString.Exclude
     private List<User> participants;
 

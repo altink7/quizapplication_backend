@@ -16,54 +16,36 @@ import java.util.List;
 public class AnswerServiceImpl implements AnswerService {
     private AnswerDao answerDao;
 
-    /**
-     * @return all answers
-     */
     @Override
     public List<Answer> getAllAnswers() {
         return answerDao.findAll();
     }
 
-    /**
-     * @param id
-     * @return answer by id
-     */
     @Override
     public Answer getAnswerById(Long id) {
         return answerDao.findById(id)
                 .orElseThrow(() -> new RuntimeException("Answer not found"));
     }
 
-    /**
-     * @param answer
-     * @return created answer
-     */
     @Override
     public Answer createAnswer(Answer answer) {
         return answerDao.save(answer);
     }
 
-    /**
-     * @param id
-     * @return true if deleted
-     */
     @Override
     public boolean deleteAnswer(Long id) {
         return answerDao.findById(id).map(this::deleteAnswer)
                 .orElse(false);
     }
 
-    /**
-     * @param answer
-     * @return updated answer
-     */
+
     @Override
     public Answer updateAnswer(Answer answer) {
         return answerDao.save(answer);
     }
 
     /**
-     * @param answer
+     * @param answer answer
      * @return true if deleted
      */
     private Boolean deleteAnswer(Answer answer) {
@@ -71,10 +53,6 @@ public class AnswerServiceImpl implements AnswerService {
         return true;
     }
 
-    /**
-     * Sets the AnswerDao implementation to be used by this service.
-     * @param answerDao The AnswerDao implementation.
-     */
     @Autowired
     public void setAnswerDao(AnswerDao answerDao) {
         this.answerDao = answerDao;
