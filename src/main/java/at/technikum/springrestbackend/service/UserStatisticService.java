@@ -8,8 +8,9 @@ public interface UserStatisticService {
 
     /**
      * Get a user statistic by user id
+     *
      * @param userId the user id
-     * @return  the user statistic
+     * @return the user statistic
      */
     UserStatistic getUserStatisticByUserId(Long userId);
 }

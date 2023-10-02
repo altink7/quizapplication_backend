@@ -1,4 +1,4 @@
-package at.technikum.springrestbackend.mapper;
+package at.technikum.springrestbackend.config.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -24,10 +24,10 @@ public class InternalModelMapper {
     /**
      * Maps an entity object to its corresponding Data Transfer Object (DTO).
      *
-     * @param entity    The entity object to be mapped.
-     * @param dtoClass  The class of the target DTO.
-     * @param <T>       The type of the entity.
-     * @param <U>       The type of the DTO.
+     * @param entity   The entity object to be mapped.
+     * @param dtoClass The class of the target DTO.
+     * @param <T>      The type of the entity.
+     * @param <U>      The type of the DTO.
      * @return The mapped DTO object.
      */
     public <T, U> U mapToDTO(T entity, Class<U> dtoClass) {

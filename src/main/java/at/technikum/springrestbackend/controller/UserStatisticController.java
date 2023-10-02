@@ -1,39 +1,43 @@
 package at.technikum.springrestbackend.controller;
 
+import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
+import at.technikum.springrestbackend.dto.UserStatisticDTO;
+import at.technikum.springrestbackend.model.UserStatistic;
 import at.technikum.springrestbackend.service.UserStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/user/statistic")
-public class UserStatisticController {
+@Component
+@RequestMapping("/api/users/statistics")
+public class UserStatisticController extends Controller {
 
-    private UserStatisticService userStatisticService;
+    private final UserStatisticService userStatisticService;
 
-    /**
-     * GET /api/user/statistic/{userId}
-     * @param userId the user id
-     */
-    @GetMapping("/{userId}")
-    public ResponseEntity<Object> getUserStatisticByUserId(@PathVariable String userId) {
-        Object userStatistic = userStatisticService.getUserStatisticByUserId(Long.valueOf(userId));
-        if (userStatistic == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(userStatistic);
-        }
+    private final InternalModelMapper mapper;
+
+    @Autowired
+    public UserStatisticController(UserStatisticService service,
+                                   InternalModelMapper mapper) {
+        this.userStatisticService = service;
+        this.mapper = mapper;
     }
 
     /**
-     * Set the UserStatisticService.
-     * @param userStatisticService The UserStatisticService to set.
+     * GET /api/user/statistics/{userId}
+     *
+     * @param userId the user id
      */
-    @Autowired
-    public void setUserStatisticService(UserStatisticService userStatisticService) {
-        this.userStatisticService = userStatisticService;
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserStatisticDTO> getUserStatisticByUserId(@PathVariable Long userId) {
+        UserStatistic userStatistic = userStatisticService.getUserStatisticByUserId(userId);
+        if (userStatistic == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(mapper.mapToDTO(userStatistic, UserStatisticDTO.class));
+        }
     }
 }

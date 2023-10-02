@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.serviceimpl;
 
+import at.technikum.springrestbackend.exceptions.AnswerNotFoundException;
 import at.technikum.springrestbackend.model.Answer;
 import at.technikum.springrestbackend.repository.AnswerDao;
 import at.technikum.springrestbackend.service.AnswerService;
@@ -14,7 +15,13 @@ import java.util.List;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
-    private AnswerDao answerDao;
+    private final AnswerDao answerDao;
+
+    @Autowired
+    public AnswerServiceImpl(AnswerDao answerDao) {
+        this.answerDao = answerDao;
+    }
+
 
     @Override
     public List<Answer> getAllAnswers() {
@@ -23,8 +30,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer getAnswerById(Long id) {
-        return answerDao.findById(id)
-                .orElseThrow(() -> new RuntimeException("Answer not found"));
+        return answerDao.findById(id).orElseThrow(AnswerNotFoundException::new);
     }
 
     @Override
@@ -34,27 +40,15 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public boolean deleteAnswer(Long id) {
-        return answerDao.findById(id).map(this::deleteAnswer)
-                .orElse(false);
+        return answerDao.findById(id).map(answer -> {
+            answerDao.delete(answer);
+            return true;
+        }).orElse(false);
     }
 
 
     @Override
     public Answer updateAnswer(Answer answer) {
         return answerDao.save(answer);
-    }
-
-    /**
-     * @param answer answer
-     * @return true if deleted
-     */
-    private Boolean deleteAnswer(Answer answer) {
-        answerDao.delete(answer);
-        return true;
-    }
-
-    @Autowired
-    public void setAnswerDao(AnswerDao answerDao) {
-        this.answerDao = answerDao;
     }
 }

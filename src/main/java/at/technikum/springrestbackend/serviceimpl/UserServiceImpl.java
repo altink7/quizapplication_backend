@@ -1,12 +1,13 @@
 package at.technikum.springrestbackend.serviceimpl;
 
+import at.technikum.springrestbackend.exceptions.UserNotFoundException;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.UserDao;
 import at.technikum.springrestbackend.service.UserService;
 import at.technikum.springrestbackend.validator.annotation.ValidateWith;
+import at.technikum.springrestbackend.validator.modelvalidator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import at.technikum.springrestbackend.validator.modelvalidator.UserValidator;
 
 import java.util.List;
 
@@ -15,7 +16,12 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -24,12 +30,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        return userDao.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return userDao.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userDao.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        return userDao.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
@@ -53,11 +59,6 @@ public class UserServiceImpl implements UserService {
             u.setEmail(user.getEmail());
             u.setPassword(user.getPassword());
             return userDao.save(u);
-        }).orElseThrow(() -> new RuntimeException("User not found"));
-    }
-
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+        }).orElseThrow(UserNotFoundException::new);
     }
 }

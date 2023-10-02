@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * custom annotation for validation
+ *
  * @see at.technikum.springrestbackend.validator.Validator
  */
 @Target({ElementType.METHOD, ElementType.TYPE})

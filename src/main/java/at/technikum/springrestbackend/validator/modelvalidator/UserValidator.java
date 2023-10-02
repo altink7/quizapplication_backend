@@ -16,6 +16,7 @@ public class UserValidator implements Validator<User> {
 
     /**
      * Validates the user data
+     *
      * @param user the object to validate
      */
     @Override
@@ -29,7 +30,7 @@ public class UserValidator implements Validator<User> {
             errors.add(new ErrorMessage("Email must not be null"));
         }
 
-        if(!errors.isEmpty()) {
+        if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
 

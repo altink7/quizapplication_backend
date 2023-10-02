@@ -1,9 +1,13 @@
 package at.technikum.springrestbackend.serviceimpl;
 
-import at.technikum.springrestbackend.model.*;
-import at.technikum.springrestbackend.repository.QuestionDao;
+import at.technikum.springrestbackend.exceptions.QuestionNotFoundException;
+import at.technikum.springrestbackend.exceptions.QuizNotFoundException;
+import at.technikum.springrestbackend.model.Category;
+import at.technikum.springrestbackend.model.Question;
+import at.technikum.springrestbackend.model.Quiz;
 import at.technikum.springrestbackend.repository.AnswerDao;
 import at.technikum.springrestbackend.repository.AnswerOptionDao;
+import at.technikum.springrestbackend.repository.QuestionDao;
 import at.technikum.springrestbackend.repository.QuizDao;
 import at.technikum.springrestbackend.service.QuizService;
 import jakarta.transaction.Transactional;
@@ -18,19 +22,28 @@ import java.util.List;
 
 @Service
 public class QuizServiceImpl implements QuizService {
-    private QuizDao quizDao;
-    private QuestionDao questionDao;
-    private AnswerOptionDao answerOptionDao;
-    private AnswerDao answerDao;
+    private final QuizDao quizDao;
+    private final QuestionDao questionDao;
+    private final AnswerOptionDao answerOptionDao;
+    private final AnswerDao answerDao;
+
+    @Autowired
+    public QuizServiceImpl(QuizDao quizDao, QuestionDao questionDao, AnswerOptionDao answerOptionDao, AnswerDao answerDao) {
+        this.quizDao = quizDao;
+        this.questionDao = questionDao;
+        this.answerOptionDao = answerOptionDao;
+        this.answerDao = answerDao;
+    }
+
 
     @Override
     public Quiz getQuizById(Long id) {
-        return quizDao.findById(id).orElseThrow(() -> new RuntimeException("Quiz not found"));
+        return quizDao.findById(id).orElseThrow(QuestionNotFoundException::new);
     }
 
     @Override
     public Quiz getQuizByCategory(Category category) {
-        return quizDao.findByCategory(category).orElseThrow(() -> new RuntimeException("Quiz not found"));
+        return quizDao.findByCategory(category).orElseThrow(QuizNotFoundException::new);
     }
 
     @Override
@@ -60,8 +73,9 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public List<Question> getAllQuestionsByQuizId(Long id) {
-        return quizDao.findById(id).orElseThrow(() -> new RuntimeException("Quiz not found")).getQuestions();
+        return quizDao.findById(id).orElseThrow(QuizNotFoundException::new).getQuestions();
     }
+
     @Override
     public boolean deleteQuiz(Long id) {
         return quizDao.findById(id).map(this::deleteQuiz).orElse(false);
@@ -69,33 +83,12 @@ public class QuizServiceImpl implements QuizService {
 
     /**
      * Delete a quiz
+     *
      * @param quiz the quiz
      * @return true if deleted
      */
-    private Boolean deleteQuiz(Quiz quiz) {
+    private boolean deleteQuiz(Quiz quiz) {
         quizDao.delete(quiz);
         return true;
     }
-
-    @Autowired
-    public void setQuizDao(QuizDao quizDao) {
-        this.quizDao = quizDao;
-    }
-
-    @Autowired
-    public void setQuestionDao(QuestionDao questionDao) {
-        this.questionDao = questionDao;
-    }
-
-    @Autowired
-    public void setAnswerOptionDao(AnswerOptionDao answerOptionDao) {
-        this.answerOptionDao = answerOptionDao;
-    }
-
-    @Autowired
-    public void setAnswerDao(AnswerDao answerDao) {
-        this.answerDao = answerDao;
-    }
-
-
 }
