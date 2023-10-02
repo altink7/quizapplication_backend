@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.serviceimpl;
 
+import at.technikum.springrestbackend.exceptions.QuestionNotFoundException;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.repository.QuestionDao;
@@ -15,11 +16,16 @@ import java.util.List;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
-    private QuestionDao questionDao;
+    private final QuestionDao questionDao;
+
+    @Autowired
+    public QuestionServiceImpl(QuestionDao questionDao) {
+        this.questionDao = questionDao;
+    }
 
     @Override
     public Question getQuestionByCategory(Category category) {
-        return questionDao.findByCategory(category).orElseThrow(() -> new RuntimeException("Question not found"));
+        return questionDao.findByCategory(category).orElseThrow(QuestionNotFoundException::new);
     }
 
     @Override
@@ -34,26 +40,15 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public boolean deleteQuestion(Long id) {
-        return questionDao.findById(id).map(this::deleteQuestion).orElse(false);
+        return questionDao.findById(id).map(question -> {
+            questionDao.delete(question);
+            return true;
+        }).orElse(false);
     }
 
     @Override
     public Question updateQuestion(Question question) {
         return questionDao.save(question);
     }
-
-    /**
-     * Delete a question
-     * @param question the question
-     * @return true if deleted
-     */
-    private Boolean deleteQuestion(Question question) {
-        questionDao.delete(question);
-        return true;
-    }
-
-    @Autowired
-    public void setQuestionDao(QuestionDao questionDao) {
-        this.questionDao = questionDao;
-    }
 }
+
