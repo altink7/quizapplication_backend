@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity(name = "quiz")
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"userStatistic"})
 public class Quiz implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

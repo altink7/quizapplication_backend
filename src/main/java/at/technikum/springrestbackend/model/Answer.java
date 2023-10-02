@@ -22,8 +22,6 @@ import java.util.Objects;
 @Entity(name = "answer")
 @EntityListeners(AuditingEntityListener.class)
 public class Answer implements Serializable {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
