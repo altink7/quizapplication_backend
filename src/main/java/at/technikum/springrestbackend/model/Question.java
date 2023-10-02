@@ -23,6 +23,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity(name = "question")
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"quiz"})
 public class Question implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
