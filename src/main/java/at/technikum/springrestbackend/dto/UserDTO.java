@@ -4,7 +4,6 @@ import at.technikum.springrestbackend.model.Gender;
 import at.technikum.springrestbackend.model.Role;
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data

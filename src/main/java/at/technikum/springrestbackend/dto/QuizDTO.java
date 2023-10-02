@@ -6,7 +6,6 @@ import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.model.UserStatistic;
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

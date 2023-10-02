@@ -6,7 +6,6 @@ import at.technikum.springrestbackend.model.Quiz;
 import lombok.Data;
 
 import java.io.File;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
