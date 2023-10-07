@@ -2,7 +2,7 @@ package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.QuestionDTO;
-import at.technikum.springrestbackend.exceptions.QuizExceptions;
+import at.technikum.springrestbackend.exceptions.QuizException;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.service.QuestionService;
@@ -55,7 +55,7 @@ public class QuestionController extends Controller {
     public ResponseEntity<QuestionDTO> getQuestionByCategory(@PathVariable Category category) {
         try {
             return ResponseEntity.ok(mapper.mapToDTO(questionService.getQuestionByCategory(category), QuestionDTO.class));
-        } catch (QuizExceptions e) {
+        } catch (QuizException e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -63,4 +63,5 @@ public class QuestionController extends Controller {
     //TODO: POST für Admins um Questions zu erstellen?
     //TODO: PUT für Admins um Questions zu ändern?
     //TODO: DELETE für Admins um Questions zu löschen?
+    // () -> wird an frontend angepasst & erweitert im laufenden dann
 }

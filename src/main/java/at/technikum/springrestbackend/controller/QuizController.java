@@ -3,7 +3,7 @@ package at.technikum.springrestbackend.controller;
 import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.QuestionDTO;
 import at.technikum.springrestbackend.dto.QuizDTO;
-import at.technikum.springrestbackend.exceptions.QuizExceptions;
+import at.technikum.springrestbackend.exceptions.QuizException;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
@@ -44,7 +44,7 @@ public class QuizController extends Controller {
     public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(mapper.mapToDTO(quizService.getQuizById(id), QuizDTO.class));
-        } catch (QuizExceptions e) {
+        } catch (QuizException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -59,7 +59,7 @@ public class QuizController extends Controller {
     public ResponseEntity<QuizDTO> getQuizByCategory(@PathVariable Category category) {
         try {
             return ResponseEntity.ok(mapper.mapToDTO(quizService.getQuizByCategory(category), QuizDTO.class));
-        } catch (QuizExceptions e) {
+        } catch (QuizException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -108,7 +108,7 @@ public class QuizController extends Controller {
         try {
             List<Question> questions = quizService.getAllQuestionsByQuizId(id);
             return ResponseEntity.ok(questions.stream().map(question -> mapper.mapToDTO(question, QuestionDTO.class)).toList());
-        } catch (QuizExceptions e) {
+        } catch (QuizException e) {
             return ResponseEntity.notFound().build();
         }
     }

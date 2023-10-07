@@ -2,6 +2,7 @@ package at.technikum.springrestbackend.serviceimpl;
 
 import at.technikum.springrestbackend.exceptions.QuestionNotFoundException;
 import at.technikum.springrestbackend.exceptions.QuizNotFoundException;
+import at.technikum.springrestbackend.model.Answer;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;

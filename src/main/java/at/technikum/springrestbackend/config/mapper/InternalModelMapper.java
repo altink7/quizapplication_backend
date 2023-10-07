@@ -15,7 +15,7 @@ public class InternalModelMapper {
     /**
      * Constructs an InternalModelMapper with a ModelMapper instance.
      *
-     * @param modelMapper The ModelMapper instance to use for mapping.
+     * @param modelMapper The ModelMapper instance to use it for mapping.
      */
     public InternalModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;

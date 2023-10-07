@@ -14,25 +14,21 @@ public interface AnswerService {
     List<Answer> getAllAnswers();
 
     /**
-     * @param id
      * @return answer by id
      */
     Answer getAnswerById(Long id);
 
     /**
-     * @param answer
      * @return created answer
      */
     Answer createAnswer(Answer answer);
 
     /**
-     * @param id
      * @return true if deleted
      */
     boolean deleteAnswer(Long id);
 
     /**
-     * @param answer
      * @return updated answer
      */
     Answer updateAnswer(Answer answer);

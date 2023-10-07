@@ -1,18 +1,15 @@
 package at.technikum.springrestbackend.model;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -20,27 +17,10 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity(name = "answer")
-@EntityListeners(AuditingEntityListener.class)
-public class Answer implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class Answer extends AbstractEntity implements Serializable {
 
     @Column(name = "answer", nullable = false)
     private String answer;
-
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    public Answer(String answer) {
-        this.answer = answer;
-    }
 
     @Override
     public final boolean equals(Object o) {

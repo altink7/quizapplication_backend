@@ -1,18 +1,17 @@
 package at.technikum.springrestbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -20,13 +19,8 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity(name = "answer_option")
-@EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({"question"})
-public class AnswerOption implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class AnswerOption extends AbstractEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "answer_id", nullable = false)
@@ -38,14 +32,6 @@ public class AnswerOption implements Serializable {
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
-
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 
     @Override
     public final boolean equals(Object o) {
