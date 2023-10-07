@@ -6,10 +6,7 @@ import at.technikum.springrestbackend.model.Answer;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
-import at.technikum.springrestbackend.repository.AnswerDao;
-import at.technikum.springrestbackend.repository.AnswerOptionDao;
-import at.technikum.springrestbackend.repository.QuestionDao;
-import at.technikum.springrestbackend.repository.QuizDao;
+import at.technikum.springrestbackend.repository.*;
 import at.technikum.springrestbackend.service.QuizService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +24,15 @@ public class QuizServiceImpl implements QuizService {
     private final QuestionDao questionDao;
     private final AnswerOptionDao answerOptionDao;
     private final AnswerDao answerDao;
+    private final UserDao userDao;
 
     @Autowired
-    public QuizServiceImpl(QuizDao quizDao, QuestionDao questionDao, AnswerOptionDao answerOptionDao, AnswerDao answerDao) {
+    public QuizServiceImpl(QuizDao quizDao, QuestionDao questionDao, AnswerOptionDao answerOptionDao, AnswerDao answerDao, UserDao userDao) {
         this.quizDao = quizDao;
         this.questionDao = questionDao;
         this.answerOptionDao = answerOptionDao;
         this.answerDao = answerDao;
+        this.userDao = userDao;
     }
 
 
@@ -43,7 +42,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public Quiz getQuizByCategory(Category category) {
+    public List<Quiz> getQuizzesByCategory(Category category) {
         return quizDao.findByCategory(category).orElseThrow(QuizNotFoundException::new);
     }
 
@@ -51,6 +50,9 @@ public class QuizServiceImpl implements QuizService {
     @Transactional
     public Quiz createQuiz(Quiz quiz) {
         Quiz persistedQuiz = quizDao.save(quiz);
+        //frontend sends us only the Id of creator, te keep the requests cleaner
+        persistedQuiz.setCreator(userDao.findById(quiz.getCreator().getId()).orElse(null));
+
         quiz.getQuestions().forEach(question -> {
 
             question.setQuiz(quiz);

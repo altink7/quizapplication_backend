@@ -1,0 +1,61 @@
+### GET Request: Get Quiz by ID ###
+GET http://localhost:5000/api/quizzes/1
+
+### GET Request: Get Quiz by Category ###
+GET http://localhost:5000/api/quizzes/categories/SPORTS
+
+### POST Request: Create Quiz ###
+POST http://localhost:5000/api/quizzes/create
+Content-Type: application/json
+
+{
+  "creatorId": 1,
+  "category": "SPORTS",
+  "questions": [
+    {
+      "question": "What is the capital of France?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "Paris",
+          "correct": true
+        },
+        {
+          "answer": "London",
+          "correct": false
+        },
+        {
+          "answer": "Berlin",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "What is the largest planet in our solar system?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "Jupiter",
+          "correct": true
+        },
+        {
+          "answer": "Mars",
+          "correct": false
+        },
+        {
+          "answer": "Earth",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}
+
+### GET Request: Get All Quizzes ###
+GET http://localhost:5000/api/quizzes/all
+
+### GET Request: Get All Questions by Quiz ID ###
+GET http://localhost:5000/api/quizzes/1/questions
+
+### DELETE Request: Delete Quiz by ID ###
+DELETE http://localhost:5000/api/quizzes/1

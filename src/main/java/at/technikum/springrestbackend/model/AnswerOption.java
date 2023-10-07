@@ -1,10 +1,7 @@
 package at.technikum.springrestbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -22,7 +19,7 @@ import java.util.Objects;
 @JsonIgnoreProperties({"question"})
 public class AnswerOption extends AbstractEntity implements Serializable {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "answer_id", nullable = false)
     private Answer answer;
 

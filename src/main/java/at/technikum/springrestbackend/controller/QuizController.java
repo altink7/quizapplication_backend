@@ -56,9 +56,13 @@ public class QuizController extends Controller {
      * @return A ResponseEntity containing the quiz if found, or a "not found" response.
      */
     @GetMapping("/categories/{category}")
-    public ResponseEntity<QuizDTO> getQuizByCategory(@PathVariable Category category) {
+    public ResponseEntity<List<QuizDTO>> getQuizByCategory(@PathVariable Category category) {
         try {
-            return ResponseEntity.ok(mapper.mapToDTO(quizService.getQuizByCategory(category), QuizDTO.class));
+            List<QuizDTO> quizDTOS = quizService.getQuizzesByCategory(category)
+                    .stream().map(quiz -> mapper.mapToDTO(quiz, QuizDTO.class))
+                    .toList();
+
+            return ResponseEntity.ok(quizDTOS);
         } catch (QuizException e) {
             return ResponseEntity.notFound().build();
         }

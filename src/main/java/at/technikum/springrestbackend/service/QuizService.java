@@ -19,12 +19,12 @@ public interface QuizService {
     Quiz getQuizById(Long id);
 
     /**
-     * Get a quiz by category
+     * Get all quizzes matching the category
      *
      * @param category the category
-     * @return the quiz
+     * @return the list of Quizzes with the Category
      */
-    Quiz getQuizByCategory(Category category);
+    List<Quiz> getQuizzesByCategory(Category category);
 
     /**
      * Create a new quiz

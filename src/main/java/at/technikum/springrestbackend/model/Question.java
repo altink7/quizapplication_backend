@@ -24,7 +24,7 @@ public class Question extends AbstractEntity implements Serializable {
     @Column(name = "question", nullable = false)
     private String question;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     private List<AnswerOption> answerOptions;
 

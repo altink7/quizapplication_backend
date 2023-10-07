@@ -22,6 +22,10 @@ public class Answer extends AbstractEntity implements Serializable {
     @Column(name = "answer", nullable = false)
     private String answer;
 
+    public Answer(String answer) {
+        this.answer = answer;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
