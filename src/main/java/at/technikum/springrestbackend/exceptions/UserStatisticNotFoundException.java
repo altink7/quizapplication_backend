@@ -1,6 +1,6 @@
 package at.technikum.springrestbackend.exceptions;
 
-public class UserStatisticNotFoundException extends QuizExceptions {
+public class UserStatisticNotFoundException extends QuizException {
     public UserStatisticNotFoundException(String errorMessage) {
         super(errorMessage);
     }

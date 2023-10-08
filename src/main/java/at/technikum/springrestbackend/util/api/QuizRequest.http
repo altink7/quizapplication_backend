@@ -1,0 +1,136 @@
+### GET Request: Get Quiz by ID ###
+GET http://localhost:5000/api/quizzes/1
+
+### GET Request: Get Quiz by Category ###
+GET http://localhost:5000/api/quizzes/categories/SPORTS
+
+### POST Request: Create Quiz ###
+POST http://localhost:5000/api/quizzes/create
+Content-Type: application/json
+
+{
+  "creatorId": 1,
+  "category": "SPORTS",
+  "questions": [
+    {
+      "question": "What is the capital of France?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "Paris",
+          "correct": true
+        },
+        {
+          "answer": "London",
+          "correct": false
+        },
+        {
+          "answer": "Berlin",
+          "correct": false
+        },
+        {
+          "answer": "Madrid",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "What is the largest planet in our solar system?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "Jupiter",
+          "correct": true
+        },
+        {
+          "answer": "Mars",
+          "correct": false
+        },
+        {
+          "answer": "Venus",
+          "correct": false
+        },
+        {
+          "answer": "Saturn",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Who won the FIFA World Cup in 2018?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "France",
+          "correct": true
+        },
+        {
+          "answer": "Brazil",
+          "correct": false
+        },
+        {
+          "answer": "Germany",
+          "correct": false
+        },
+        {
+          "answer": "Spain",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Which country is known as the Land of the Rising Sun?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "Japan",
+          "correct": true
+        },
+        {
+          "answer": "China",
+          "correct": false
+        },
+        {
+          "answer": "South Korea",
+          "correct": false
+        },
+        {
+          "answer": "Vietnam",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Who is the all-time leading scorer in NBA history?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "Kareem Abdul-Jabbar",
+          "correct": true
+        },
+        {
+          "answer": "LeBron James",
+          "correct": false
+        },
+        {
+          "answer": "Michael Jordan",
+          "correct": false
+        },
+        {
+          "answer": "Kobe Bryant",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}
+
+
+### GET Request: Get All Quizzes ###
+GET http://localhost:5000/api/quizzes/all
+
+### GET Request: Get All Questions by Quiz ID ###
+GET http://localhost:5000/api/quizzes/1/questions
+
+### DELETE Request: Delete Quiz by ID ###
+DELETE http://localhost:5000/api/quizzes/1

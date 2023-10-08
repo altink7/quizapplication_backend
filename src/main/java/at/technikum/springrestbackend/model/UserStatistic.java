@@ -1,18 +1,14 @@
 package at.technikum.springrestbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,11 +18,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity(name = "user_statistic")
 @EntityListeners(AuditingEntityListener.class)
-public class UserStatistic implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class UserStatistic extends AbstractEntity implements Serializable {
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
@@ -37,14 +29,6 @@ public class UserStatistic implements Serializable {
 
     @Column(name = "points")
     private int points;
-
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 
     @Override
     public final boolean equals(Object o) {

@@ -1,6 +1,6 @@
 package at.technikum.springrestbackend.exceptions;
 
-public class UserNotFoundException extends QuizExceptions {
+public class UserNotFoundException extends QuizException {
     public UserNotFoundException(String errorMessage) {
         super(errorMessage);
     }

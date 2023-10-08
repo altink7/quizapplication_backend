@@ -2,7 +2,7 @@ package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.UserDTO;
-import at.technikum.springrestbackend.exceptions.QuizExceptions;
+import at.technikum.springrestbackend.exceptions.QuizException;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -19,9 +19,9 @@ import java.util.List;
 
 @Component
 @RequestMapping("/api/users")
-public class UserController {
-    private UserService userService;
-    private InternalModelMapper mapper;
+public class UserController extends Controller{
+    private final UserService userService;
+    private final InternalModelMapper mapper;
 
     public UserController(UserService userService,
                           InternalModelMapper mapper) {
@@ -39,7 +39,7 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
         try {
             return ResponseEntity.ok(mapper.mapToDTO(userService.getUserById(userId), UserDTO.class));
-        } catch (QuizExceptions e) {
+        } catch (QuizException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -54,7 +54,7 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
         try {
             return ResponseEntity.ok(mapper.mapToDTO(userService.getUserByEmail(email), UserDTO.class));
-        } catch (QuizExceptions e) {
+        } catch (QuizException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -107,7 +107,7 @@ public class UserController {
             User updatedUser = userService.updateUser(userId, mapper.mapToEntity(userDTO, User.class));
             UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);
             return ResponseEntity.ok(updatedUserDTO);
-        } catch (QuizExceptions e) {
+        } catch (QuizException e) {
             return ResponseEntity.notFound().build();
         }
     }

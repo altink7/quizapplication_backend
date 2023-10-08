@@ -6,14 +6,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,13 +18,8 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity(name = "quiz")
-@EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties({"userStatistic"})
-public class Quiz implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class Quiz extends AbstractEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
@@ -46,7 +37,7 @@ public class Quiz implements Serializable {
     @Column(name = "category", nullable = false)
     private Category category;
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     private List<Question> questions;
 
@@ -59,14 +50,6 @@ public class Quiz implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_statistic_id")
     private UserStatistic userStatistic;
-
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 
     @Override
     public final boolean equals(Object o) {
