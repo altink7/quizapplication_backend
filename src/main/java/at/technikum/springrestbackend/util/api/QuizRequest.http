@@ -27,6 +27,10 @@ Content-Type: application/json
         {
           "answer": "Berlin",
           "correct": false
+        },
+        {
+          "answer": "Madrid",
+          "correct": false
         }
       ]
     },
@@ -43,13 +47,84 @@ Content-Type: application/json
           "correct": false
         },
         {
-          "answer": "Earth",
+          "answer": "Venus",
+          "correct": false
+        },
+        {
+          "answer": "Saturn",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Who won the FIFA World Cup in 2018?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "France",
+          "correct": true
+        },
+        {
+          "answer": "Brazil",
+          "correct": false
+        },
+        {
+          "answer": "Germany",
+          "correct": false
+        },
+        {
+          "answer": "Spain",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Which country is known as the Land of the Rising Sun?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "Japan",
+          "correct": true
+        },
+        {
+          "answer": "China",
+          "correct": false
+        },
+        {
+          "answer": "South Korea",
+          "correct": false
+        },
+        {
+          "answer": "Vietnam",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "question": "Who is the all-time leading scorer in NBA history?",
+      "category": "SPORTS",
+      "answerOptions": [
+        {
+          "answer": "Kareem Abdul-Jabbar",
+          "correct": true
+        },
+        {
+          "answer": "LeBron James",
+          "correct": false
+        },
+        {
+          "answer": "Michael Jordan",
+          "correct": false
+        },
+        {
+          "answer": "Kobe Bryant",
           "correct": false
         }
       ]
     }
   ]
 }
+
 
 ### GET Request: Get All Quizzes ###
 GET http://localhost:5000/api/quizzes/all
