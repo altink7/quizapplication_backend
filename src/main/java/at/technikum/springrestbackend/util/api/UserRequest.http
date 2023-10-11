@@ -15,7 +15,20 @@ Content-Type: application/json
   "salutation": "MALE",
   "firstName": "Test",
   "lastName": "Altin",
-  "email": "altin",
+  "email": "altin@test.com",
+  "password": "secret",
+  "country": "USA",
+  "role": 0
+}
+
+### POST Request: Create User with Email Error ###
+POST http://localhost:8081/api/users/create
+Content-Type: application/json
+
+{
+  "salutation": "MALE",
+  "firstName": "Test",
+  "lastName": "Altin",
   "password": "secret",
   "country": "USA",
   "role": 0
