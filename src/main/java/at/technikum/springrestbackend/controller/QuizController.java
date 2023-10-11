@@ -3,7 +3,6 @@ package at.technikum.springrestbackend.controller;
 import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.QuestionDTO;
 import at.technikum.springrestbackend.dto.QuizDTO;
-import at.technikum.springrestbackend.exceptions.QuizException;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
@@ -42,11 +41,7 @@ public class QuizController extends Controller {
      */
     @GetMapping("/{id}")
     public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(mapper.mapToDTO(quizService.getQuizById(id), QuizDTO.class));
-        } catch (QuizException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(mapper.mapToDTO(quizService.getQuizById(id), QuizDTO.class));
     }
 
     /**
@@ -57,15 +52,11 @@ public class QuizController extends Controller {
      */
     @GetMapping("/categories/{category}")
     public ResponseEntity<List<QuizDTO>> getQuizByCategory(@PathVariable Category category) {
-        try {
-            List<QuizDTO> quizDTOS = quizService.getQuizzesByCategory(category)
-                    .stream().map(quiz -> mapper.mapToDTO(quiz, QuizDTO.class))
-                    .toList();
+        List<QuizDTO> quizDTOS = quizService.getQuizzesByCategory(category)
+                .stream().map(quiz -> mapper.mapToDTO(quiz, QuizDTO.class))
+                .toList();
 
-            return ResponseEntity.ok(quizDTOS);
-        } catch (QuizException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(quizDTOS);
     }
 
     /**
@@ -76,13 +67,9 @@ public class QuizController extends Controller {
      */
     @PostMapping("/create")
     public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quiz) {
-        try{
-            Quiz quizEntity = mapper.mapToEntity(quiz, Quiz.class);
-            Quiz createdQuiz = quizService.createQuiz(quizEntity);
-            return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(createdQuiz, QuizDTO.class));
-        } catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+        Quiz quizEntity = mapper.mapToEntity(quiz, Quiz.class);
+        Quiz createdQuiz = quizService.createQuiz(quizEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(createdQuiz, QuizDTO.class));
     }
 
     /**
@@ -109,12 +96,8 @@ public class QuizController extends Controller {
      */
     @GetMapping("/{id}/questions")
     public ResponseEntity<List<QuestionDTO>> getAllQuestionsByQuizId(@PathVariable Long id) {
-        try {
-            List<Question> questions = quizService.getAllQuestionsByQuizId(id);
-            return ResponseEntity.ok(questions.stream().map(question -> mapper.mapToDTO(question, QuestionDTO.class)).toList());
-        } catch (QuizException e) {
-            return ResponseEntity.notFound().build();
-        }
+        List<Question> questions = quizService.getAllQuestionsByQuizId(id);
+        return ResponseEntity.ok(questions.stream().map(question -> mapper.mapToDTO(question, QuestionDTO.class)).toList());
     }
 
     /**

@@ -2,7 +2,6 @@ package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.QuestionDTO;
-import at.technikum.springrestbackend.exceptions.QuizException;
 import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.service.QuestionService;
@@ -53,11 +52,7 @@ public class QuestionController extends Controller {
      */
     @GetMapping("/categories/{category}")
     public ResponseEntity<QuestionDTO> getQuestionByCategory(@PathVariable Category category) {
-        try {
-            return ResponseEntity.ok(mapper.mapToDTO(questionService.getQuestionByCategory(category), QuestionDTO.class));
-        } catch (QuizException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(mapper.mapToDTO(questionService.getQuestionByCategory(category), QuestionDTO.class));
     }
 
     //TODO: POST für Admins um Questions zu erstellen?
