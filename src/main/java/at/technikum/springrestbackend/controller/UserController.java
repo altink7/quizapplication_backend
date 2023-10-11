@@ -89,7 +89,7 @@ public class UserController extends Controller{
      * @return A ResponseEntity containing the updated user's DTO if successful, or a "not found" response if the user was not found.
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<Object> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
         User updatedUser = userService.updateUser(userId, mapper.mapToEntity(userDTO, User.class));
         UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);
         return ResponseEntity.ok(updatedUserDTO);
