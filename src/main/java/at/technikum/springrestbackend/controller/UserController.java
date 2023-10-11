@@ -2,7 +2,6 @@ package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.UserDTO;
-import at.technikum.springrestbackend.exceptions.QuizException;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -37,11 +36,7 @@ public class UserController extends Controller{
      */
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
-        try {
-            return ResponseEntity.ok(mapper.mapToDTO(userService.getUserById(userId), UserDTO.class));
-        } catch (QuizException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(mapper.mapToDTO(userService.getUserById(userId), UserDTO.class));
     }
 
     /**
@@ -52,11 +47,7 @@ public class UserController extends Controller{
      */
     @GetMapping("/emails")
     public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
-        try {
-            return ResponseEntity.ok(mapper.mapToDTO(userService.getUserByEmail(email), UserDTO.class));
-        } catch (QuizException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(mapper.mapToDTO(userService.getUserByEmail(email), UserDTO.class));
     }
 
     /**
@@ -84,14 +75,10 @@ public class UserController extends Controller{
      * @return A ResponseEntity containing the created user's DTO if successful, or a "bad request" response if there is an issue with the request.
      */
     @PostMapping("/create")
-    public ResponseEntity<Object> createUser(@RequestBody UserDTO userDTO) {
-        try {
-            User createdUser = userService.createUser(mapper.mapToEntity(userDTO, User.class));
-            UserDTO createdUserDTO = mapper.mapToDTO(createdUser, UserDTO.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        User createdUser = userService.createUser(mapper.mapToEntity(userDTO, User.class));
+        UserDTO createdUserDTO = mapper.mapToDTO(createdUser, UserDTO.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
     }
 
     /**
@@ -102,14 +89,10 @@ public class UserController extends Controller{
      * @return A ResponseEntity containing the updated user's DTO if successful, or a "not found" response if the user was not found.
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
-        try {
-            User updatedUser = userService.updateUser(userId, mapper.mapToEntity(userDTO, User.class));
-            UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);
-            return ResponseEntity.ok(updatedUserDTO);
-        } catch (QuizException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Object> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+        User updatedUser = userService.updateUser(userId, mapper.mapToEntity(userDTO, User.class));
+        UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);
+        return ResponseEntity.ok(updatedUserDTO);
     }
 
     /**
