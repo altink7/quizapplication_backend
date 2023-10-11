@@ -1,11 +1,11 @@
 ### GET Request: Get Quiz by ID ###
-GET http://localhost:5000/api/quizzes/1
+GET http://localhost:8081/api/quizzes/1
 
 ### GET Request: Get Quiz by Category ###
-GET http://localhost:5000/api/quizzes/categories/SPORTS
+GET http://localhost:8081/api/quizzes/categories/SPORTS
 
 ### POST Request: Create Quiz ###
-POST http://localhost:5000/api/quizzes/create
+POST http://localhost:8081/api/quizzes/create
 Content-Type: application/json
 
 {
@@ -127,10 +127,10 @@ Content-Type: application/json
 
 
 ### GET Request: Get All Quizzes ###
-GET http://localhost:5000/api/quizzes/all
+GET http://localhost:8081/api/quizzes/all
 
 ### GET Request: Get All Questions by Quiz ID ###
-GET http://localhost:5000/api/quizzes/1/questions
+GET http://localhost:8081/api/quizzes/1/questions
 
 ### DELETE Request: Delete Quiz by ID ###
-DELETE http://localhost:5000/api/quizzes/1
+DELETE http://localhost:8081/api/quizzes/1

@@ -1,28 +1,28 @@
 ### GET Request: Get User by ID ###
-GET http://localhost:5000/api/users/1
+GET http://localhost:8081/api/users/1
 
 ### GET Request: Get User by Email ###
-GET http://localhost:5000/api/users/emails?email=altin@office.com
+GET http://localhost:8081/api/users/emails?email=altin@office.com
 
 ### GET Request: Get All Users ###
-GET http://localhost:5000/api/users/all
+GET http://localhost:8081/api/users/all
 
 ### POST Request: Create User ###
-POST http://localhost:5000/api/users/create
+POST http://localhost:8081/api/users/create
 Content-Type: application/json
 
 {
   "salutation": "MALE",
   "firstName": "Test",
   "lastName": "Altin",
-  "email": "altin@office.com",
+  "email": "altin",
   "password": "secret",
   "country": "USA",
   "role": 0
 }
 
 ### PUT Request: Update User by ID ###
-PUT http://localhost:5000/api/users/5
+PUT http://localhost:8081/api/users/5
 Content-Type: application/json
 
 {
@@ -36,4 +36,4 @@ Content-Type: application/json
 }
 
 ### DELETE Request: Delete User by ID ###
-DELETE http://localhost:5000/api/users/5
+DELETE http://localhost:8081/api/users/5
