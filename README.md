@@ -15,6 +15,7 @@ This is the template project for the BWENG course.
   * Port 3306
 
 ## Component Diagram
+![erd.jpg](erd.jpg)
 
 ## Already installed dependecies
 
