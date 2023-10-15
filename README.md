@@ -1,4 +1,4 @@
-# Backend Web Engineering Template Project
+# Backend Web Engineering
 
 This is the template project for the BWENG course.
 
@@ -13,43 +13,21 @@ This is the template project for the BWENG course.
   * Port 8080
 * MariaDB container
   * Port 3306
-* MinIO container
-  * Port 9000
-  * Port 9001 (Dashboard)
 
 ## Component Diagram
 
-![App Componenet Diagram](http://www.plantuml.com/plantuml/png/POxDIiL038NtUOfmz_SDHAwttRWGmJx1E1DhS9eCcTID-EwMbj8VTydv3dpdLZsOZqE6J1-EhcZSVpecDehEAW0XkXescKaSG3GHjXg_oF074ACEHML2UEcAiVHuLtLyAkKoytsZKN7JdCbEe2FxvaZr5BzHqSgknZFw1K1CmSDxg8GlmJYqzsF6ylmAKmzWsOiFr-lZthkTCzhCwx741_Fsh7Xr_oVBWXj96eVy1m00)
-
 ## Already installed dependecies
-
-* springdoc-openapi
-  * /api (API json)
-  * /swagger.html (Swagger API UI)
 
 ## Setup
 
-Build Docker container
-
 ```shell
-docker-compose build
+docker run -p 127.0.0.1:3306:3306 --name quiz23 -e MARIADB_ROOT_PASSWORD=quiz23 -d mariadb:latest 
 ```
 
-Start Docker container (with build)
-
 ```shell
-docker-compose up
-docker-compose up --build
+docker exec -it quiz23 mariadb -u root -p
 ```
 
-Stop Docker container
-
 ```shell
-docker-compose stop
-```
-
-Remove Docker container
-
-```shell
-docker-compose down
+create database quizapplication;
 ```

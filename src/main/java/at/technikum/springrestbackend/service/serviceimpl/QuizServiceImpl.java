@@ -1,4 +1,4 @@
-package at.technikum.springrestbackend.serviceimpl;
+package at.technikum.springrestbackend.service.serviceimpl;
 
 import at.technikum.springrestbackend.exceptions.QuestionNotFoundException;
 import at.technikum.springrestbackend.exceptions.QuizNotFoundException;

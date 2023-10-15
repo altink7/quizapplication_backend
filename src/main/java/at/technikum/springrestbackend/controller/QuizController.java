@@ -65,7 +65,7 @@ public class QuizController extends Controller {
      * @param quiz The quiz to create.
      * @return A ResponseEntity containing the created quiz if successful, or a "not found" response.
      */
-    @PostMapping("/create")
+    @PostMapping("/createQuiz")
     public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quiz) {
         Quiz quizEntity = mapper.mapToEntity(quiz, Quiz.class);
         Quiz createdQuiz = quizService.createQuiz(quizEntity);

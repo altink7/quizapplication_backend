@@ -74,7 +74,7 @@ public class UserController extends Controller {
      * @param userDTO The user DTO to create.
      * @return A ResponseEntity containing the created user's DTO if successful, or a "bad request" response if there is an issue with the request.
      */
-    @PostMapping("/create")
+    @PostMapping("/createUser")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
         User createdUser = userService.createUser(mapper.mapToEntity(userDTO, User.class));
         UserDTO createdUserDTO = mapper.mapToDTO(createdUser, UserDTO.class);

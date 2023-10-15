@@ -1,7 +1,5 @@
-package at.technikum.springrestbackend.serviceimpl;
+package at.technikum.springrestbackend.service.serviceimpl;
 
-import at.technikum.springrestbackend.exceptions.QuestionNotFoundException;
-import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.repository.QuestionDao;
 import at.technikum.springrestbackend.service.QuestionService;
@@ -21,11 +19,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     public QuestionServiceImpl(QuestionDao questionDao) {
         this.questionDao = questionDao;
-    }
-
-    @Override
-    public Question getQuestionByCategory(Category category) {
-        return questionDao.findByCategory(category).orElseThrow(QuestionNotFoundException::new);
     }
 
     @Override
