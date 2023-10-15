@@ -4,6 +4,7 @@ import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.UserDTO;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -75,7 +76,7 @@ public class UserController extends Controller {
      * @return A ResponseEntity containing the created user's DTO if successful, or a "bad request" response if there is an issue with the request.
      */
     @PostMapping("/createUser")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
         User createdUser = userService.createUser(mapper.mapToEntity(userDTO, User.class));
         UserDTO createdUserDTO = mapper.mapToDTO(createdUser, UserDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
@@ -89,7 +90,7 @@ public class UserController extends Controller {
      * @return A ResponseEntity containing the updated user's DTO if successful, or a "not found" response if the user was not found.
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @Valid @RequestBody UserDTO userDTO) {
         User updatedUser = userService.updateUser(userId, mapper.mapToEntity(userDTO, User.class));
         UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);
         return ResponseEntity.ok(updatedUserDTO);

@@ -7,6 +7,7 @@ import at.technikum.springrestbackend.model.Category;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
 import at.technikum.springrestbackend.service.QuizService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class QuizController extends Controller {
      * @return A ResponseEntity containing the created quiz if successful, or a "not found" response.
      */
     @PostMapping("/createQuiz")
-    public ResponseEntity<QuizDTO> createQuiz(@RequestBody QuizDTO quiz) {
+    public ResponseEntity<QuizDTO> createQuiz(@Valid @RequestBody QuizDTO quiz) {
         Quiz quizEntity = mapper.mapToEntity(quiz, Quiz.class);
         Quiz createdQuiz = quizService.createQuiz(quizEntity);
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(createdQuiz, QuizDTO.class));
