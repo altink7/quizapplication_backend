@@ -4,8 +4,6 @@ import at.technikum.springrestbackend.exceptions.UserNotFoundException;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.UserDao;
 import at.technikum.springrestbackend.service.UserService;
-import at.technikum.springrestbackend.validator.annotation.ValidateWith;
-import at.technikum.springrestbackend.validator.modelvalidator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +44,6 @@ public class UserServiceImpl implements UserService {
         }).orElse(false);
     }
 
-    @ValidateWith(UserValidator.class)
     public User createUser(User user) {
         return userDao.save(user);
     }
