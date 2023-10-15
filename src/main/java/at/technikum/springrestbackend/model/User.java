@@ -20,6 +20,7 @@ public class User extends AbstractEntity {
     @ToString.Exclude
     private List<Quiz> createdQuizzes;
 
+    @Enumerated
     @Column(name = "salutation", nullable = false)
     private Gender salutation;
 
@@ -38,6 +39,7 @@ public class User extends AbstractEntity {
     @Column(name = "country")
     private String country;
 
+    @Enumerated
     @Column(name = "role", nullable = false)
     private Role role;
 

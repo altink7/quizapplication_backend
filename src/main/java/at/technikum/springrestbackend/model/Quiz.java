@@ -31,6 +31,7 @@ public class Quiz extends AbstractEntity {
     @ToString.Exclude
     private List<User> participants;
 
+    @Enumerated
     @Column(name = "category", nullable = false, unique = true)
     private Category category;
 
