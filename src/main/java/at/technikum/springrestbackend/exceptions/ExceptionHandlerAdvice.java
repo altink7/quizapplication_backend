@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.exceptions;
 
+import org.modelmapper.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionHandlerAdvice {
 
     //USER Exceptions
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity handleException(Exception e) {
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity handleException(ValidationException e) {
         // log exception
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)

@@ -18,7 +18,7 @@ import java.util.List;
 
 @Component
 @RequestMapping("/api/users")
-public class UserController extends Controller{
+public class UserController extends Controller {
     private final UserService userService;
     private final InternalModelMapper mapper;
 
