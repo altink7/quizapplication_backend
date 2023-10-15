@@ -5,7 +5,7 @@ GET http://localhost:8081/api/quizzes/1
 GET http://localhost:8081/api/quizzes/categories/SPORTS
 
 ### POST Request: Create Quiz ###
-POST http://localhost:8081/api/quizzes/create
+POST http://localhost:8081/api/quizzes/createQuiz
 Content-Type: application/json
 
 {
@@ -14,7 +14,6 @@ Content-Type: application/json
   "questions": [
     {
       "question": "What is the capital of France?",
-      "category": "SPORTS",
       "answerOptions": [
         {
           "answer": "Paris",

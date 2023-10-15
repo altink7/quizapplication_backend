@@ -1,4 +1,4 @@
-package at.technikum.springrestbackend.serviceimpl;
+package at.technikum.springrestbackend.service.serviceimpl;
 
 import at.technikum.springrestbackend.exceptions.UserStatisticNotFoundException;
 import at.technikum.springrestbackend.model.UserStatistic;
@@ -18,7 +18,7 @@ public class UserStatisticServiceImpl implements UserStatisticService {
 
     @Override
     public UserStatistic getUserStatisticByUserId(Long userId) {
-        return userStatisticDao.findByUserId(userId).orElseThrow(UserStatisticNotFoundException::new);
+        return userStatisticDao.findUserStatisticById(userId).orElseThrow(UserStatisticNotFoundException::new);
     }
 
 }
