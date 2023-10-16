@@ -22,12 +22,12 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class UserStatistic extends AbstractEntity {
 
-    @Column(name = "points", nullable = false)
+    @Column(name = "points")
     private int points;
 
-    @Column(name = "start_time", nullable = false)
+    @Column(name = "start_time")
     private LocalDateTime start;
 
-    @Column(name = "duration", nullable = false)
+    @Column(name = "duration")
     private Duration duration;
 }

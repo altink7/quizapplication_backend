@@ -21,13 +21,13 @@ public class User extends AbstractEntity {
     private List<Quiz> createdQuizzes;
 
     @Enumerated
-    @Column(name = "salutation", nullable = false)
+    @Column(name = "salutation")
     private Gender salutation;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "email", unique = true, nullable = false)

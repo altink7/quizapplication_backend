@@ -20,7 +20,7 @@ public class AnswerOption extends AbstractEntity {
     @JoinColumn(name = "answer_id", nullable = false)
     private Answer answer;
 
-    @Column(name = "correct", nullable = false)
+    @Column(name = "correct")
     private boolean isCorrect;
 
     @ManyToOne

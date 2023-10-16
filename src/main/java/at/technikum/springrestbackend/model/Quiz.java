@@ -19,7 +19,7 @@ import java.util.List;
 public class Quiz extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User creator;
 
     @ManyToMany
@@ -32,7 +32,7 @@ public class Quiz extends AbstractEntity {
     private List<User> participants;
 
     @Enumerated
-    @Column(name = "category", nullable = false, unique = true)
+    @Column(name = "category", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
