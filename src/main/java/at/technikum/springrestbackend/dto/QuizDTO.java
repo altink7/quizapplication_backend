@@ -6,13 +6,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @JsonIgnoreProperties({"userStatistic"})
 public class QuizDTO {
 
-    @NotNull(message = "Creator ID cannot be null!")
+    private Long id ;
+
     private Long creatorId;
 
     @NotNull(message = "Category cannot be null!")
@@ -20,5 +22,9 @@ public class QuizDTO {
 
     @NotNull(message = "A quiz needs questions!")
     private List<Question> questions;
+
+    private LocalDate startDate;
+
+    private int duration;
 
 }

@@ -28,7 +28,7 @@ CREATE TABLE answer (
 );
 
 CREATE TABLE answer_option (
-                               correct BIT NOT NULL,
+                               correct BIT,
                                answer_id BIGINT NOT NULL,
                                created_at DATETIME(6),
                                question_id BIGINT NOT NULL,
@@ -47,11 +47,13 @@ CREATE TABLE question (
 );
 
 CREATE TABLE quiz (
-                      category TINYINT NOT NULL CHECK (category BETWEEN 0 AND 6),
+                      category TINYINT,
                       created_at DATETIME(6),
                       quiz_id BIGINT NOT NULL,
                       updated_at DATETIME(6),
-                      user_id BIGINT NOT NULL,
+                      user_id BIGINT,
+                      start_time DATETIME(6),
+                      duration NUMBER,
                       PRIMARY KEY (quiz_id)
 );
 
@@ -67,24 +69,24 @@ CREATE TABLE quiz_statistics (
 
 CREATE TABLE user (
                       role TINYINT NOT NULL CHECK (role BETWEEN 0 AND 1),
-                      salutation TINYINT NOT NULL CHECK (salutation BETWEEN 0 AND 2),
+                      salutation TINYINT,
                       created_at DATETIME(6),
                       updated_at DATETIME(6),
                       user_id BIGINT NOT NULL,
                       user_statistic_id BIGINT,
                       country VARCHAR(255),
                       email VARCHAR(255) NOT NULL,
-                      first_name VARCHAR(255) NOT NULL,
-                      last_name VARCHAR(255) NOT NULL,
+                      first_name VARCHAR(255),
+                      last_name VARCHAR(255),
                       password VARCHAR(255) NOT NULL,
                       PRIMARY KEY (user_id)
 );
 
 CREATE TABLE user_statistic (
-                                duration DECIMAL(21,0) NOT NULL,
-                                points INTEGER NOT NULL,
+                                duration DECIMAL(21,0),
+                                points INTEGER,
                                 created_at DATETIME(6),
-                                start_time DATETIME(6) NOT NULL,
+                                start_time DATETIME(6) ,
                                 updated_at DATETIME(6),
                                 user_statistic_id BIGINT NOT NULL,
                                 PRIMARY KEY (user_statistic_id)

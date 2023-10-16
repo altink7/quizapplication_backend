@@ -10,6 +10,8 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties({"quiz"})
 public class QuestionDTO {
+
+    private Long id;
     private String question;
     private List<AnswerOption> answerOptions;
     private File file;

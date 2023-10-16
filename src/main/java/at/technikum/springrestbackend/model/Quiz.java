@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -47,4 +48,10 @@ public class Quiz extends AbstractEntity {
     )
     @ToString.Exclude
     private List<UserStatistic> statistics;
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "duration")
+    private int duration;
 }
