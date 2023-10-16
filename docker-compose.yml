@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  backend_db:
+  backend_db_new:
     container_name: backend_db
     image: mariadb
     environment:
@@ -18,9 +18,9 @@ services:
     container_name: backend_pma
     image: phpmyadmin/phpmyadmin
     links:
-      - backend_db
+      - backend_db_new
     environment:
-      PMA_HOST: backend_db
+      PMA_HOST: backend_db_new
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     restart: always
@@ -31,7 +31,7 @@ services:
   backend_web:
     container_name: backend_web
     depends_on:
-      - backend_db
+      - backend_db_new
     image: tomcat
     volumes:
       - ./target/spring-rest-backend-0.0.1.war:/usr/local/tomcat/webapps/ROOT.war

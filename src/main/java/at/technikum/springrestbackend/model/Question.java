@@ -19,7 +19,7 @@ import java.util.List;
 @AttributeOverride(name = "id", column = @Column(name = "question_id"))
 public class Question extends AbstractEntity {
 
-    @Column(name = "question", nullable = false, unique = true)
+    @Column(name = "question", nullable = false)
     private String question;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
