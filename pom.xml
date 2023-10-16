@@ -11,6 +11,7 @@
     <groupId>at.technikum</groupId>
     <artifactId>spring-rest-backend</artifactId>
     <version>0.0.1</version>
+    <packaging>war</packaging>
     <name>spring-rest-backend</name>
     <description>bweng-spring-rest-backend</description>
     <properties>
@@ -90,6 +91,13 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- Tomcat -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Spring Security & JWT Library -->
