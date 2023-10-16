@@ -8,27 +8,29 @@ This is the template project for the BWENG course.
     * [Get Docker](https://docs.docker.com/get-docker/)
 
 ## Container
-
 * Spring Boot basic setup container
   * Port 8080
-* MariaDB container
+* MariaDB
   * Port 3306
+* phpMyAdmin
+  * Port 8082
 
 ## Component Diagram
 ![erd.jpg](erd.jpg)
 
 ## Already installed dependecies
+* springdoc-openapi
+  * /api (API json)
+  * /swagger.html (Swagger API UI)
+
+## Build
+Build .war from source. The package is already included in docker-compose.yml
+```shell
+mvn clean package
+```
 
 ## Setup
-
+Start Docker container with MariaDB and phpMyAdmin. Change directory to folder where docker-compose.yml is located.
 ```shell
-docker run -p 127.0.0.1:3306:3306 --name quiz23 -e MARIADB_ROOT_PASSWORD=quiz23 -d mariadb:latest 
-```
-
-```shell
-docker exec -it quiz23 mariadb -u root -p
-```
-
-```shell
-create database quizapplication;
+docker-compose up -d
 ```
