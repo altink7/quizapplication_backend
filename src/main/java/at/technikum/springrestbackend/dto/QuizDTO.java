@@ -20,4 +20,5 @@ public class QuizDTO {
 
     @NotNull(message = "A quiz needs questions!")
     private List<Question> questions;
+
 }
