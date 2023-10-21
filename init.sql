@@ -76,17 +76,15 @@ CREATE TABLE user (
                       user_statistic_id BIGINT,
                       country VARCHAR(255),
                       email VARCHAR(255) NOT NULL,
-                      first_name VARCHAR(255),
-                      last_name VARCHAR(255),
+                      first_name VARCHAR(255) NOT NULL,
+                      last_name VARCHAR(255) NOT NULL,
                       password VARCHAR(255) NOT NULL,
                       PRIMARY KEY (user_id)
 );
 
 CREATE TABLE user_statistic (
-                                duration DECIMAL(21,0),
                                 points INTEGER,
                                 created_at DATETIME(6),
-                                start_time DATETIME(6) ,
                                 updated_at DATETIME(6),
                                 user_statistic_id BIGINT NOT NULL,
                                 PRIMARY KEY (user_statistic_id)
