@@ -24,10 +24,10 @@ public class User extends AbstractEntity {
     @Column(name = "salutation")
     private Gender salutation;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "email", unique = true, nullable = false)

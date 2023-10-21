@@ -20,7 +20,7 @@ import java.util.List;
 public class Quiz extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id") //FIXME: nullable?
     private User creator;
 
     @ManyToMany
@@ -49,7 +49,7 @@ public class Quiz extends AbstractEntity {
     @ToString.Exclude
     private List<UserStatistic> statistics;
 
-    @Column(name = "start_date")
+    @Column(name = "start_date") //TODO: setzen der default werte in service
     private LocalDate startDate;
 
     @Column(name = "duration")

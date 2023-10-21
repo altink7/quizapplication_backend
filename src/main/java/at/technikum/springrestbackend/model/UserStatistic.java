@@ -10,9 +10,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @ToString
@@ -22,12 +19,6 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class UserStatistic extends AbstractEntity {
 
-    @Column(name = "points")
+    @Column(name = "points", nullable = false)
     private int points;
-
-    @Column(name = "start_time")
-    private LocalDateTime start;
-
-    @Column(name = "duration")
-    private Duration duration;
 }

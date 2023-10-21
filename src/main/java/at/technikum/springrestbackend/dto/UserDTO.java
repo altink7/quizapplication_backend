@@ -15,8 +15,10 @@ public class UserDTO {
 
     private Gender salutation;
 
+    @NotNull(message = "First name cannot be null!")
     private String firstName;
 
+    @NotNull(message = "Last name cannot be null!")
     private String lastName;
 
     @NotNull(message = "Email cannot be null!")

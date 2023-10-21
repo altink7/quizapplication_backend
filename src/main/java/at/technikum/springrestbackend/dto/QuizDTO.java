@@ -1,7 +1,6 @@
 package at.technikum.springrestbackend.dto;
 
 import at.technikum.springrestbackend.model.Category;
-import at.technikum.springrestbackend.model.Question;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -13,7 +12,7 @@ import java.util.List;
 @JsonIgnoreProperties({"userStatistic"})
 public class QuizDTO {
 
-    private Long id ;
+    private Long id;
 
     private Long creatorId;
 
@@ -21,7 +20,7 @@ public class QuizDTO {
     private Category category;
 
     @NotNull(message = "A quiz needs questions!")
-    private List<Question> questions;
+    private List<QuestionDTO> questions;
 
     private LocalDate startDate;
 
