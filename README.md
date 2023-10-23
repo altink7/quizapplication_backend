@@ -9,11 +9,9 @@ This is the template project for the BWENG course.
 
 ## Container
 * Spring Boot basic setup container
-  * Port 8080
+  * Port 8081
 * MariaDB
   * Port 3306
-* phpMyAdmin
-  * Port 8082
 
 ## Component Diagram
 ![erd.jpg](erd.jpg)

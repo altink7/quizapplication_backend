@@ -1,47 +1,30 @@
 version: "3.9"
 
 services:
-  backend_db_new:
-    container_name: backend_db
-    image: mariadb
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: root
     ports:
       - "3306:3306"
-    volumes:
-      - ./db-data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - backend
-  backend_pma:
-    container_name: backend_pma
-    image: phpmyadmin/phpmyadmin
-    links:
-      - backend_db_new
-    environment:
-      PMA_HOST: backend_db_new
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
-    restart: always
+      - quizapplication
+
+  tomcat:
+    image: tomcat:latest
+    container_name: tomcat
     ports:
-      - 8082:80
-    networks:
-      - backend
-  backend_web:
-    container_name: backend_web
-    depends_on:
-      - backend_db_new
-    image: tomcat
+      - "8081:8081"
     volumes:
       - ./target/spring-rest-backend-0.0.1.war:/usr/local/tomcat/webapps/ROOT.war
-    ports:
-      - '8081:8080'
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
-      - backend
+      - quizapplication
+    depends_on:
+      - mariadb
+
 networks:
-  backend:
-    name: backend
+  quizapplication:
+    driver: bridge
