@@ -4,6 +4,9 @@ GET http://localhost:8081/api/quizzes/1
 ### Get Quiz by Category
 GET http://localhost:8081/api/quizzes/categories/SPORTS
 
+### Get Quiz by Category - Error
+GET http://localhost:8081/api/quizzes/categories/TEST
+
 ### Create Quiz
 POST http://localhost:8081/api/quizzes/createQuiz
 Content-Type: application/json

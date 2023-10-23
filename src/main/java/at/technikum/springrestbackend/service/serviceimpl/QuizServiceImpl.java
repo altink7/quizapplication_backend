@@ -42,9 +42,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    //FIXME: @ValidateWith(CategoryCustomValidator.class)
     public List<Quiz> getQuizzesByCategory(Category category) {
-
         return quizDao.findByCategory(category).orElseThrow(QuizNotFoundException::new);
     }
 
