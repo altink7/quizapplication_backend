@@ -8,11 +8,14 @@ import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
 import at.technikum.springrestbackend.service.QuizService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +26,7 @@ import java.util.List;
 
 @Component
 @RequestMapping("/api/quizzes")
+@Validated
 public class QuizController extends Controller {
     private final QuizService quizService;
     private final InternalModelMapper mapper;
@@ -41,7 +45,7 @@ public class QuizController extends Controller {
      * @return A ResponseEntity containing the quiz if found, or a "not found" response.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<QuizDTO> getQuizById(@PathVariable Long id) {
+    public ResponseEntity<QuizDTO> getQuizById(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long id) {
         return ResponseEntity.ok(mapper.mapToDTO(quizService.getQuizById(id), QuizDTO.class));
     }
 
@@ -96,7 +100,7 @@ public class QuizController extends Controller {
      * @return A ResponseEntity containing a list of questions if found, or a "not found" response.
      */
     @GetMapping("/{id}/questions")
-    public ResponseEntity<List<QuestionDTO>> getAllQuestionsByQuizId(@PathVariable Long id) {
+    public ResponseEntity<List<QuestionDTO>> getAllQuestionsByQuizId(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long id) {
         List<Question> questions = quizService.getAllQuestionsByQuizId(id);
         return ResponseEntity.ok(questions.stream().map(question -> mapper.mapToDTO(question, QuestionDTO.class)).toList());
     }
@@ -108,7 +112,7 @@ public class QuizController extends Controller {
      * @return A ResponseEntity indicating success or a "not found" response.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuiz(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteQuiz(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long id) {
         return quizService.deleteQuiz(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }

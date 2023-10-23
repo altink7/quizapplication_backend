@@ -1,7 +1,7 @@
 package at.technikum.springrestbackend.validator.modelvalidator;
 
 import at.technikum.springrestbackend.model.User;
-import at.technikum.springrestbackend.validator.Validator;
+import at.technikum.springrestbackend.validator.CustomValidator;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ValidationException;
 import org.modelmapper.spi.ErrorMessage;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @Log4j2
-public class UserValidator implements Validator<User> {
+public class UserCustomValidator implements CustomValidator<User> {
 
     /**
      * Validates the user data

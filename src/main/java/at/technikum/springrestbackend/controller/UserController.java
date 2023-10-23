@@ -5,10 +5,15 @@ import at.technikum.springrestbackend.dto.UserDTO;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +24,7 @@ import java.util.List;
 
 @Component
 @RequestMapping("/api/users")
+@Validated
 public class UserController extends Controller {
     private final UserService userService;
     private final InternalModelMapper mapper;
@@ -36,7 +42,7 @@ public class UserController extends Controller {
      * @return A ResponseEntity containing the user's DTO if found, or a "not found" response.
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId) {
         return ResponseEntity.ok(mapper.mapToDTO(userService.getUserById(userId), UserDTO.class));
     }
 
@@ -47,7 +53,8 @@ public class UserController extends Controller {
      * @return A ResponseEntity containing the user's DTO if found, or a "not found" response.
      */
     @GetMapping("/emails")
-    public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
+    public ResponseEntity<UserDTO> getUserByEmail(@RequestParam @NotNull(message = "Email cannot be null!")
+                                                  @Email(message = "Not a valid email!") String email) {
         return ResponseEntity.ok(mapper.mapToDTO(userService.getUserByEmail(email), UserDTO.class));
     }
 
@@ -90,7 +97,7 @@ public class UserController extends Controller {
      * @return A ResponseEntity containing the updated user's DTO if successful, or a "not found" response if the user was not found.
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId, @Valid @RequestBody UserDTO userDTO) {
         User updatedUser = userService.updateUser(userId, mapper.mapToEntity(userDTO, User.class));
         UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);
         return ResponseEntity.ok(updatedUserDTO);
@@ -103,7 +110,7 @@ public class UserController extends Controller {
      * @return A ResponseEntity containing no content if successful, or a "not found" response if the user was not found.
      */
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId) {
         return userService.deleteUser(userId) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }

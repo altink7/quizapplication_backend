@@ -1,10 +1,10 @@
 ### GET Request: Get Quiz by ID ###
 GET http://localhost:8081/api/quizzes/1
 
-### GET Request: Get Quiz by Category ###
+### Get Quiz by Category
 GET http://localhost:8081/api/quizzes/categories/SPORTS
 
-### POST Request: Create Quiz ###
+### Create Quiz
 POST http://localhost:8081/api/quizzes/createQuiz
 Content-Type: application/json
 
@@ -127,11 +127,14 @@ Content-Type: application/json
 }
 
 
-### GET Request: Get All Quizzes ###
+### Get All Quizzes
 GET http://localhost:8081/api/quizzes/all
 
-### GET Request: Get All Questions by Quiz ID ###
+### Get All Questions by Quiz ID
 GET http://localhost:8081/api/quizzes/1/questions
 
-### DELETE Request: Delete Quiz by ID ###
+### Get All Questions by Quiz ID - QuizNotFoundException
+GET http://localhost:8081/api/quizzes/9999/questions
+
+### Delete Quiz by ID
 DELETE http://localhost:8081/api/quizzes/1

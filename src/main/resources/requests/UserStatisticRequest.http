@@ -1,0 +1,8 @@
+### Get UserStatistic by ID 1
+GET http://localhost:8081/api/users/statistics/1
+
+### Get UserStatistic by ID - UserStatisticNotFoundException
+GET http://localhost:8081/api/users/statistics/9999
+
+### Update UserStatistic by ID 1 with -20 points
+PUT http://localhost:8081/api/users/statistics/1?newPoints=-20

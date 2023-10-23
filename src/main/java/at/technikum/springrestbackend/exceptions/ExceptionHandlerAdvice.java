@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.exceptions;
 
+import jakarta.validation.ConstraintViolationException;
 import org.modelmapper.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,10 @@ public class ExceptionHandlerAdvice {
         BindingResult result = e.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
         return ResponseEntity.badRequest().body("Field: " + fieldErrors.iterator().next().getField() + "; ErrorMessage: " + fieldErrors.iterator().next().getDefaultMessage());
+    }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity handleConstraintViolationException(ConstraintViolationException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

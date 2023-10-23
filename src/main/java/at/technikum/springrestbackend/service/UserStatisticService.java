@@ -13,4 +13,13 @@ public interface UserStatisticService {
      * @return the user statistic
      */
     UserStatistic getUserStatisticByUserId(Long userId);
+
+    /**
+     * Update users points by their id
+     *
+     * @param userId    the user id
+     * @param newPoints the updated points
+     * @return the user statistic
+     */
+    UserStatistic updateUserStatisticByUserId(Long userId, int newPoints);
 }

@@ -1,6 +1,6 @@
 package at.technikum.springrestbackend.validator.annotation;
 
-import at.technikum.springrestbackend.validator.Validator;
+import at.technikum.springrestbackend.validator.CustomValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,11 +10,11 @@ import java.lang.annotation.Target;
 /**
  * custom annotation for validation
  *
- * @see at.technikum.springrestbackend.validator.Validator
+ * @see CustomValidator
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidateWith {
 
-    Class<? extends Validator<?>> value();
+    Class<? extends CustomValidator<?>> value();
 }

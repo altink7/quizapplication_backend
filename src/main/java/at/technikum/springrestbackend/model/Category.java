@@ -12,7 +12,7 @@ public enum Category implements Serializable {
     CULTURE(3),
     SCIENCE(4),
     NATURE(5),
-    RANDOM(6);
+    UNDEFINED(6);
 
     private final int value;
 

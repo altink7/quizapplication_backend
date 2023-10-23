@@ -21,4 +21,11 @@ public class UserStatisticServiceImpl implements UserStatisticService {
         return userStatisticDao.findUserStatisticById(userId).orElseThrow(UserStatisticNotFoundException::new);
     }
 
+    @Override
+    public UserStatistic updateUserStatisticByUserId(Long userId, int newPoints) {
+        UserStatistic userStatistic = userStatisticDao.findUserStatisticById(userId).orElseThrow(UserStatisticNotFoundException::new);
+        userStatistic.setPoints(newPoints);
+        return userStatisticDao.save(userStatistic);
+    }
+
 }

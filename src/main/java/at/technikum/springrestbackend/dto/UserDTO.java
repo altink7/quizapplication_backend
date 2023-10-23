@@ -5,12 +5,16 @@ import at.technikum.springrestbackend.model.Role;
 import at.technikum.springrestbackend.model.UserStatistic;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class UserDTO {
 
+    @Max(Long.MAX_VALUE)
+    @Min(Long.MIN_VALUE)
     private Long id;
 
     private Gender salutation;
