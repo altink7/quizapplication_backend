@@ -4,10 +4,7 @@ import at.technikum.springrestbackend.model.Gender;
 import at.technikum.springrestbackend.model.Role;
 import at.technikum.springrestbackend.model.UserStatistic;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
@@ -20,9 +17,11 @@ public class UserDTO {
     private Gender salutation;
 
     @NotNull(message = "First name cannot be null!")
+    @Size(min = 4, max = 20, message = "First Name must be between 4 and 20 characters long!")
     private String firstName;
 
     @NotNull(message = "Last name cannot be null!")
+    @Size(min = 4, max = 20, message = "First Name must be between 4 and 20 characters long!")
     private String lastName;
 
     @NotNull(message = "Email cannot be null!")
@@ -30,6 +29,7 @@ public class UserDTO {
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Size(min = 8, message = "Password needs to be at least 8 characters long!")
     private String password;
 
     private String country;
