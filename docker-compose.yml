@@ -12,6 +12,8 @@ services:
       - "3306:3306"
     networks:
       - quizapplication
+    volumes:
+      - mariadb_data:/var/lib/mysql
 
   tomcat:
     image: tomcat:latest
@@ -28,3 +30,6 @@ services:
 networks:
   quizapplication:
     driver: bridge
+
+volumes:
+  mariadb_data:

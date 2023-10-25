@@ -7,7 +7,7 @@ Content-Type: application/json
   "firstName": "Test",
   "lastName": "Altin",
   "email": "altin@test.com",
-  "password": "secret",
+  "password": "secretsecret",
   "country": "USA",
   "role": "USER",
   "userStatistic": {
@@ -24,7 +24,7 @@ Content-Type: application/json
   "firstName": "Sebastian",
   "lastName": "Grünewald",
   "email": "sebi@test.com",
-  "password": "secret",
+  "password": "secretsecret",
   "country": "AUT",
   "role": "ADMIN",
   "userStatistic": {
@@ -41,7 +41,7 @@ Content-Type: application/json
   "firstName": "Test",
   "lastName": "Altin",
   "email": "mail",
-  "password": "secret",
+  "password": "secretsecret",
   "country": "USA",
   "role": "USER",
   "userStatistic": {
