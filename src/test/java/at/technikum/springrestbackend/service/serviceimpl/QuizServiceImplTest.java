@@ -6,8 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.io.File;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -126,16 +129,33 @@ public class QuizServiceImplTest {
     private Quiz getQuiz() {
         Quiz quiz = new Quiz();
         quiz.setCreator(new User());
-        Question question = new Question();
-        question.setQuiz(quiz);
-        question.setAnswerOptions(List.of(new AnswerOption()));
-        quiz.setQuestions(List.of(question));
-        Answer answer = new Answer();
-        AnswerOption answerOption = new AnswerOption();
-        answerOption.setAnswer(answer);
-        answerOption.setQuestion(question);
-        question.setAnswerOptions(List.of(answerOption));
+        quiz.setQuestions(List.of(getQuestion(quiz)));
+        quiz.setCategory(Category.SPORTS);
+        quiz.setDuration(10);
+        quiz.setParticipants(List.of(new User()));
+        quiz.setStartDate(LocalDate.now().plusDays(7));
+        quiz.setCreatedAt(LocalDate.now().atStartOfDay());
+        quiz.setUpdatedAt(LocalDate.now().atStartOfDay());
         when(quizDao.save(quiz)).thenReturn(quiz);
         return quiz;
+    }
+
+    private Question getQuestion(Quiz quiz) {
+        Question question = new Question();
+        question.setQuestion("Test");
+        question.setQuiz(quiz);
+        question.setFile(Mockito.mock(File.class));
+        question.setAnswerOptions(List.of(getAnswerOption(question)));
+        return question;
+    }
+
+    private AnswerOption getAnswerOption(Question question) {
+        Answer answer = new Answer();
+        answer.setAnswer("Test");
+        AnswerOption answerOption = new AnswerOption();
+        answerOption.setAnswer(answer);
+        answerOption.setCorrect(true);
+        answerOption.setQuestion(question);
+        return answerOption;
     }
 }
