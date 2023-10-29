@@ -4,6 +4,7 @@ package at.technikum.springrestbackend.testutil.tester.standard;
 import at.technikum.springrestbackend.testutil.tester.base.AbstractClassTester;
 import at.technikum.springrestbackend.testutil.tester.base.Tester;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -131,7 +132,9 @@ public class GetterSetterTester extends AbstractClassTester implements Tester {
             return new int[]{4, 5, 6};
         } else if (type == String[].class) {
             return new String[]{"array", "of", "strings"};
-        } else if (type.isEnum()) {
+        } else if (type == File.class) {
+            return new File("test.txt");
+        }else if (type.isEnum()) {
             Object[] enumValues = type.getEnumConstants();
             if (enumValues.length > 0) {
                 return enumValues[0];

@@ -38,7 +38,7 @@ public class ToStringTester extends AbstractClassTester implements Tester {
 
             Object instanceTest = createInstance(clazz);
 
-            String expectedBeginning = clazz.getSimpleName() + "{";
+            String expectedBeginning = clazz.getSimpleName() + "(";
 
             // Invoke the toString() method and check if it starts with the expected beginning
             String actualToString = (String) toStringMethod.invoke(instanceTest);
