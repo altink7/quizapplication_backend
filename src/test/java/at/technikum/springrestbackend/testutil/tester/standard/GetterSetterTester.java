@@ -9,6 +9,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -134,7 +135,9 @@ public class GetterSetterTester extends AbstractClassTester implements Tester {
             return new String[]{"array", "of", "strings"};
         } else if (type == File.class) {
             return new File("test.txt");
-        }else if (type.isEnum()) {
+        } else if(type == LocalDateTime.class) {
+            return LocalDate.now().atStartOfDay();
+        } else if (type.isEnum()) {
             Object[] enumValues = type.getEnumConstants();
             if (enumValues.length > 0) {
                 return enumValues[0];

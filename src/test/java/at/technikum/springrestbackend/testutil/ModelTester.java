@@ -28,10 +28,6 @@ import java.util.function.Supplier;
  *            .test();
  * }
  * </pre>
- *
- * @author altin
- * @since 12.08.2023
- * @version 1.0
  */
 public class ModelTester extends AbstractClassTester {
     public static final List<Tester> STANDARD_TESTER;
