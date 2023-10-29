@@ -1,7 +1,6 @@
 package at.technikum.springrestbackend.model;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
