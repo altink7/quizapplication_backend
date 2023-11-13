@@ -5,8 +5,10 @@ services:
     image: mariadb:latest
     container_name: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DATABASE_URL: ${DATABASE_URL}
+      FRONTEND_WEB_URL: ${FRONTEND_WEB_URL}
       MYSQL_USER: root
     ports:
       - "3306:3306"
