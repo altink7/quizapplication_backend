@@ -1,6 +1,9 @@
 package at.technikum.springrestbackend.service;
 
+import at.technikum.springrestbackend.dto.ParticipantDTO;
+import at.technikum.springrestbackend.dto.QuizDTO;
 import at.technikum.springrestbackend.model.Category;
+import at.technikum.springrestbackend.model.Participant;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
 import org.springframework.stereotype.Service;
@@ -50,10 +53,25 @@ public interface QuizService {
     List<Question> getAllQuestionsByQuizId(Long id);
 
     /**
+     * Update the quiz by id and add Participant to the quiz
+     */
+    Quiz addParticipantToQuiz(Long id, Participant participant);
+
+    /**
      * Delete a quiz by id
      *
      * @param id the quiz id
      * @return true if the quiz was deleted, false otherwise
      */
     boolean deleteQuiz(Long id);
+
+    /**
+     * Sort the participants by their score and time
+     */
+    List<ParticipantDTO> sortParticipantsByScoreAndTime(List<ParticipantDTO> participants);
+
+    /**
+     * Randomize order of questions and answers
+     */
+    QuizDTO randomizeQuiz(QuizDTO quizDTO);
 }
