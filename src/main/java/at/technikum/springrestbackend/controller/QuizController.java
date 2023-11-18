@@ -1,9 +1,11 @@
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
+import at.technikum.springrestbackend.dto.ParticipantDTO;
 import at.technikum.springrestbackend.dto.QuestionDTO;
 import at.technikum.springrestbackend.dto.QuizDTO;
 import at.technikum.springrestbackend.model.Category;
+import at.technikum.springrestbackend.model.Participant;
 import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
 import at.technikum.springrestbackend.service.QuizService;
@@ -74,7 +76,7 @@ public class QuizController extends Controller {
     public ResponseEntity<QuizDTO> createQuiz(@Valid @RequestBody QuizDTO quiz) {
         Quiz quizEntity = mapper.mapToEntity(quiz, Quiz.class);
         Quiz createdQuiz = quizService.createQuiz(quizEntity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(createdQuiz, QuizDTO.class));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToDTO(createdQuiz, QuizDTO.class)); //201
     }
 
     /**
@@ -114,5 +116,25 @@ public class QuizController extends Controller {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteQuiz(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long id) {
         return quizService.deleteQuiz(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+
+    /**
+     * Endpoint to add a participant to a quiz by its ID.
+     */
+    @PostMapping("/{id}/addParticipant")
+    public ResponseEntity<QuizDTO> addParticipantToQuiz(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long id, @RequestBody ParticipantDTO participant) {
+        Quiz quiz = quizService.addParticipantToQuiz(id, mapper.mapToEntity(participant, Participant.class));
+        return ResponseEntity.ok(mapper.mapToDTO(quiz, QuizDTO.class));
+    }
+
+    /**
+     * Endpoint to get all participants for a quiz by its ID.
+     */
+    @GetMapping("/{id}/participants")
+    public ResponseEntity<List<ParticipantDTO>> getAllParticipantsByQuizId(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long id) {
+        List<Participant> participants = quizService.getQuizById(id).getParticipants();
+        List<ParticipantDTO> dtoList = new java.util.ArrayList<>(participants.stream().map(participant -> mapper.mapToDTO(participant, ParticipantDTO.class)).toList());
+
+        return ResponseEntity.ok(quizService.sortParticipantsByScoreAndTime(dtoList));
     }
 }

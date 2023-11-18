@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
  * e.g: CrossOrigin destination
  */
 @RestController
-@CrossOrigin
+@CrossOrigin //for CORS policy - allows all origins - can be used to restrict access to certain origins
 public abstract class Controller {
 }
