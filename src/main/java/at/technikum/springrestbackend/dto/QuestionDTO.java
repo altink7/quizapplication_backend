@@ -18,7 +18,7 @@ public class QuestionDTO {
     private String question;
 
     @NotNull(message = "AnswerOption cannot be null!")
-    private List<AnswerOption> answerOptions;
+    private List<AnswerOptionDTO> answerOptions;
 
     private File file;
 }
