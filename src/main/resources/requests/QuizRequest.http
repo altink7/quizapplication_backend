@@ -7,13 +7,13 @@ GET http://localhost:8081/api/quizzes/categories/SPORTS
 ### Get Quiz by Category - Error
 GET http://localhost:8081/api/quizzes/categories/TEST
 
-### Create Quiz
+### Create Quiz Geography
 POST http://localhost:8081/api/quizzes/createQuiz
 Content-Type: application/json
 
 {
   "creatorId": 1,
-  "category": "SPORTS",
+  "category": "GEOGRAPHY",
   "startDate": "2023-10-18",
   "duration": 30,
   "questions": [
@@ -40,7 +40,6 @@ Content-Type: application/json
     },
     {
       "question": "What is the largest planet in our solar system?",
-      "category": "SPORTS",
       "answerOptions": [
         {
           "answer": "Jupiter",
@@ -61,6 +60,40 @@ Content-Type: application/json
       ]
     },
     {
+      "question": "Which country is known as the Land of the Rising Sun?",
+      "answerOptions": [
+        {
+          "answer": "Japan",
+          "correct": true
+        },
+        {
+          "answer": "China",
+          "correct": false
+        },
+        {
+          "answer": "South Korea",
+          "correct": false
+        },
+        {
+          "answer": "Vietnam",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}
+
+### Create Quiz Sports
+POST http://localhost:8081/api/quizzes/createQuiz
+Content-Type: application/json
+
+{
+  "creatorId": 1,
+  "category": "SPORTS",
+  "startDate": "2023-10-18",
+  "duration": 30,
+  "questions": [
+    {
       "question": "Who won the FIFA World Cup in 2018?",
       "category": "SPORTS",
       "answerOptions": [
@@ -78,28 +111,6 @@ Content-Type: application/json
         },
         {
           "answer": "Spain",
-          "correct": false
-        }
-      ]
-    },
-    {
-      "question": "Which country is known as the Land of the Rising Sun?",
-      "category": "SPORTS",
-      "answerOptions": [
-        {
-          "answer": "Japan",
-          "correct": true
-        },
-        {
-          "answer": "China",
-          "correct": false
-        },
-        {
-          "answer": "South Korea",
-          "correct": false
-        },
-        {
-          "answer": "Vietnam",
           "correct": false
         }
       ]
@@ -140,4 +151,4 @@ GET http://localhost:8081/api/quizzes/1/questions
 GET http://localhost:8081/api/quizzes/9999/questions
 
 ### Delete Quiz by ID
-DELETE http://localhost:8081/api/quizzes/1
+DELETE http://localhost:8081/api/quizzes/3
