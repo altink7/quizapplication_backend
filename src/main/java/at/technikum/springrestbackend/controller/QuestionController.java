@@ -37,10 +37,10 @@ public class QuestionController extends Controller {
         List<Question> questions = questionService.getAllQuestions();
 
         if (CollectionUtils.isEmpty(questions)) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build(); //404
         }
 
-        return ResponseEntity.ok(questions.stream().map(question -> mapper.mapToDTO(question, QuestionDTO.class)).toList());
+        return ResponseEntity.ok(questions.stream().map(question -> mapper.mapToDTO(question, QuestionDTO.class)).toList()); //200
     }
 
     @PostMapping("/createQuestion")

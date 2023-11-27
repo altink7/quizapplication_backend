@@ -23,14 +23,8 @@ public class Quiz extends AbstractEntity {
     @JoinColumn(name = "user_id") //FIXME: nullable?
     private User creator;
 
-    @ManyToMany
-    @JoinTable(
-            name = "quiz_participants",
-            joinColumns = @JoinColumn(name = "quiz_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    @ToString.Exclude
-    private List<User> participants;
+    @OneToMany(mappedBy = "quiz")
+    private List<Participant> participants;
 
     @Enumerated
     @Column(name = "category", nullable = false)
@@ -40,14 +34,9 @@ public class Quiz extends AbstractEntity {
     @ToString.Exclude
     private List<Question> questions;
 
-    @ManyToMany
-    @JoinTable(
-            name = "quiz_statistics",
-            joinColumns = @JoinColumn(name = "quiz_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    @ToString.Exclude
-    private List<UserStatistic> statistics;
+    @ManyToOne
+    @JoinColumn(name = "user_statistic_id")
+    private UserStatistic userStatistic;
 
     @Column(name = "start_date") //TODO: setzen der default werte in service
     private LocalDate startDate;
