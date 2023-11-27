@@ -3,6 +3,7 @@ package at.technikum.springrestbackend.controller;
 import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.config.security.UserAuthProvider;
 import at.technikum.springrestbackend.dto.CredentialsDTO;
+import at.technikum.springrestbackend.dto.TokenResponseDTO;
 import at.technikum.springrestbackend.dto.UserDTO;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
@@ -29,21 +30,12 @@ public class AuthController extends Controller {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> login(@RequestBody CredentialsDTO credentialsDTO) {
+    public ResponseEntity<TokenResponseDTO> login(@RequestBody CredentialsDTO credentialsDTO) {
         User user = userService.login(credentialsDTO);
-        UserDTO userDTO = UserDTO.builder()
-                .id(user.getId())
+        TokenResponseDTO tokenResponse = TokenResponseDTO.builder()
                 .token(userAuthProvider.createToken(user))
-                .salutation(user.getSalutation())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .email(user.getEmail())
-                .password(user.getPassword().toCharArray())
-                .country(user.getCountry())
-                .role(user.getRole())
-                .userStatistic(user.getUserStatistic())
                 .build();
-        return ResponseEntity.ok(userDTO);
+        return ResponseEntity.ok(tokenResponse);
     }
 
     /**
@@ -53,20 +45,11 @@ public class AuthController extends Controller {
      * @return A ResponseEntity containing the created user's DTO if successful, or a "bad request" response if there is an issue with the request.
      */
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> register(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<TokenResponseDTO> register(@Valid @RequestBody UserDTO userDTO) {
         User createdUser = userService.register(mapper.mapToEntity(userDTO, User.class));
-        UserDTO createdUserDTO = UserDTO.builder()
-                .id(createdUser.getId())
+        TokenResponseDTO tokenResponse = TokenResponseDTO.builder()
                 .token(userAuthProvider.createToken(createdUser))
-                .salutation(createdUser.getSalutation())
-                .firstName(createdUser.getFirstName())
-                .lastName(createdUser.getLastName())
-                .email(createdUser.getEmail())
-                .password(createdUser.getPassword().toCharArray())
-                .country(createdUser.getCountry())
-                .role(createdUser.getRole())
-                .userStatistic(createdUser.getUserStatistic())
                 .build();
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tokenResponse);
     }
 }
