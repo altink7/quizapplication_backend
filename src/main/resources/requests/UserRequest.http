@@ -1,5 +1,5 @@
 ### Create User
-POST http://localhost:8081/api/users/createUser
+POST http://localhost:8081/api/auth/register
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 }
 
 ### Create second User
-POST http://localhost:8081/api/users/createUser
+POST http://localhost:8081/api/auth/register
 Content-Type: application/json
 
 {
@@ -33,7 +33,7 @@ Content-Type: application/json
 }
 
 ### Create User - Validation Error (eMail)
-POST http://localhost:8081/api/users/createUser
+POST http://localhost:8081/api/auth/register
 Content-Type: application/json
 
 {
@@ -47,6 +47,33 @@ Content-Type: application/json
   "userStatistic": {
     "points": 10
   }
+}
+
+### Login User Successfull
+POST http://localhost:8081/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "altin@test.com",
+  "password": "secretsecret"
+}
+
+### Login User Wrong password
+POST http://localhost:8081/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "altin@test.com",
+  "password": "wrongpassword"
+}
+
+### Login User Wrong email
+POST http://localhost:8081/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "wrong@mail.com",
+  "password": "wrongpassword"
 }
 
 ### Get User by ID 1

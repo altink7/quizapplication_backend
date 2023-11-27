@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -74,19 +73,6 @@ public class UserController extends Controller {
         }
 
         return ResponseEntity.ok(userDTOs);
-    }
-
-    /**
-     * Create a new user.
-     *
-     * @param userDTO The user DTO to create.
-     * @return A ResponseEntity containing the created user's DTO if successful, or a "bad request" response if there is an issue with the request.
-     */
-    @PostMapping("/createUser")
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
-        User createdUser = userService.createUser(mapper.mapToEntity(userDTO, User.class));
-        UserDTO createdUserDTO = mapper.mapToDTO(createdUser, UserDTO.class);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDTO);
     }
 
     /**
