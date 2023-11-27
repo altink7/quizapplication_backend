@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.service;
 
+import at.technikum.springrestbackend.dto.CredentialsDTO;
 import at.technikum.springrestbackend.model.User;
 import org.springframework.stereotype.Service;
 
@@ -39,12 +40,20 @@ public interface UserService {
     boolean deleteUser(Long userId);
 
     /**
-     * Create a new user
+     * Create a new user (register)
      *
      * @param user the user
      * @return the created user
      */
-    User createUser(User user);
+    User register(User user);
+
+    /**
+     * Login
+     *
+     * @param credentialsDTO the DTO with all credentials
+     * @return the logged in User
+     */
+    User login(CredentialsDTO credentialsDTO);
 
     /**
      * Update a user

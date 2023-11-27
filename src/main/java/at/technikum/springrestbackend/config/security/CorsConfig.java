@@ -1,4 +1,4 @@
-package at.technikum.springrestbackend.config.cors;
+package at.technikum.springrestbackend.config.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +15,12 @@ public class CorsConfig {
     @Value("${cors.allowed.methods}")
     private String allowedMethods;
 
+    @Value("${cors.max.age}")
+    private int maxAge;
+
     /**
      * Configures the CORS settings for the application
+     *
      * @return The WebMvcConfigurer instance
      */
     @Bean
@@ -28,7 +32,7 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                         .allowedOrigins(frontendWebUrl)
                         .allowedMethods(allowedMethods.split(","))
-                        .maxAge(3600);
+                        .maxAge(maxAge);
             }
         };
     }

@@ -104,11 +104,11 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void testCreateUser() {
+    void testRegister() {
         User user = new User();
         when(userDao.save(user)).thenReturn(user);
 
-        User result = userService.createUser(user);
+        User result = userService.register(user);
 
         assertThat(result, is(user));
     }

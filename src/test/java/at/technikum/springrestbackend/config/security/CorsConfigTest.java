@@ -1,4 +1,4 @@
-package at.technikum.springrestbackend.config.cors;
+package at.technikum.springrestbackend.config.security;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

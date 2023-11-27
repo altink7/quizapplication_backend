@@ -5,14 +5,23 @@ import at.technikum.springrestbackend.model.Role;
 import at.technikum.springrestbackend.model.UserStatistic;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
 
     @Max(Long.MAX_VALUE)
     @Min(Long.MIN_VALUE)
     private Long id;
+
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) FIXME
+    private String token;
 
     private Gender salutation;
 
@@ -30,7 +39,7 @@ public class UserDTO {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Size(min = 8, message = "Password needs to be at least 8 characters long!")
-    private String password;
+    private char[] password;
 
     private String country;
 
