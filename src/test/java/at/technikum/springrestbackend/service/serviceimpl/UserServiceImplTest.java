@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -23,6 +25,9 @@ public class UserServiceImplTest {
 
     @Mock
     private UserDao userDao;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -106,11 +111,15 @@ public class UserServiceImplTest {
     @Test
     void testRegister() {
         User user = new User();
+        user.setPassword("notEncodedPassword");
         when(userDao.save(user)).thenReturn(user);
+        when(passwordEncoder.encode(any())).thenReturn("encodedPassword");
 
         User result = userService.register(user);
 
         assertThat(result, is(user));
+        // check that the password is encoded
+        assertThat(result.getPassword(), is("encodedPassword"));
     }
 
     @Test

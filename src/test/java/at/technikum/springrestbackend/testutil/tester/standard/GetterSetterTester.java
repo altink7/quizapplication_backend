@@ -131,7 +131,9 @@ public class GetterSetterTester extends AbstractClassTester implements Tester {
             return new byte[]{1, 2, 3};
         } else if (type == int[].class) {
             return new int[]{4, 5, 6};
-        } else if (type == String[].class) {
+        } else if (type == char[].class) {
+            return new char[]{'a', 'b', 'c'};
+        }else if (type == String[].class) {
             return new String[]{"array", "of", "strings"};
         } else if (type == File.class) {
             return new File("test.txt");

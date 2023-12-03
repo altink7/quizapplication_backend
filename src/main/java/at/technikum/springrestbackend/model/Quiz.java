@@ -24,6 +24,7 @@ public class Quiz extends AbstractEntity {
     private User creator;
 
     @OneToMany(mappedBy = "quiz")
+    @ToString.Exclude
     private List<Participant> participants;
 
     @Enumerated

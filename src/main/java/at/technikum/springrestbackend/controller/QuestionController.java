@@ -37,27 +37,9 @@ public class QuestionController extends Controller {
         List<Question> questions = questionService.getAllQuestions();
 
         if (CollectionUtils.isEmpty(questions)) {
-            return ResponseEntity.notFound().build(); //404
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(questions.stream().map(question -> mapper.mapToDTO(question, QuestionDTO.class)).toList()); //200
-    }
-
-    @PostMapping("/createQuestion")
-    public ResponseEntity<QuestionDTO> createQuestion(@RequestBody QuestionDTO question) {
-        //TODO
-        return null;
-    }
-
-    @PutMapping("/{questionId}")
-    public ResponseEntity<QuestionDTO> updateQuestionById(@PathVariable Long questionId) {
-        //TODO
-        return null;
-    }
-
-    @DeleteMapping("/{questionId}")
-    public ResponseEntity<Void> deleteQuestionById(@PathVariable Long questionId) {
-        //TODO
-        return null;
+        return ResponseEntity.ok(questions.stream().map(question -> mapper.mapToDTO(question, QuestionDTO.class)).toList());
     }
 }
