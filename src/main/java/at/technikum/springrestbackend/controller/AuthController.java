@@ -8,6 +8,7 @@ import at.technikum.springrestbackend.dto.UserDTO;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Log4j2
 @Component
 @RequestMapping("/api/auth")
 public class AuthController extends Controller {

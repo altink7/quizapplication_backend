@@ -51,8 +51,8 @@ public class UserController extends Controller {
      * @param email The email address of the user.
      * @return A ResponseEntity containing the user's DTO if found, or a "not found" response.
      */
-    @GetMapping("/emails")
-    public ResponseEntity<UserDTO> getUserByEmail(@RequestParam @NotNull(message = "Email cannot be null!")
+    @GetMapping("/emails/{email}")
+    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable @NotNull(message = "Email cannot be null!")
                                                   @Email(message = "Not a valid email!") String email) {
         return ResponseEntity.ok(mapper.mapToDTO(userService.getUserByEmail(email), UserDTO.class));
     }
