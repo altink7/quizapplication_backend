@@ -74,4 +74,13 @@ public interface QuizService {
      * Randomize order of questions and answers
      */
     QuizDTO randomizeQuiz(QuizDTO quizDTO);
+
+    /**
+     * Get all quizzes by creator id
+     *
+     * @param creatorId the creator id
+     * @return the list of quizzes
+     */
+    List<Quiz> getAllQuizzesByCreatorId(Long creatorId);
+
 }

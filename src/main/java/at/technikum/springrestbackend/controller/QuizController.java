@@ -137,4 +137,16 @@ public class QuizController extends Controller {
 
         return ResponseEntity.ok(quizService.sortParticipantsByScoreAndTime(dtoList));
     }
+
+    @GetMapping("/all/creator/{creatorId}")
+        public ResponseEntity<List<QuizDTO>> getAllQuizzesByCreatorId(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long creatorId) {
+        List<Quiz> quizzes = quizService.getAllQuizzesByCreatorId(creatorId);
+
+        if (CollectionUtils.isEmpty(quizzes)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(quizzes.stream().map(quiz -> mapper.mapToDTO(quiz, QuizDTO.class)).toList());
+    }
+
 }

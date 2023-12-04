@@ -149,6 +149,11 @@ public class QuizServiceImpl implements QuizService {
         return quizDTO;
     }
 
+    @Override
+    public List<Quiz> getAllQuizzesByCreatorId(Long creatorId) {
+        return quizDao.findByCreatorId(creatorId).orElseThrow(QuizNotFoundException::new);
+    }
+
 
     /**
      * Delete a quiz
