@@ -45,6 +45,7 @@ public class UserAuthProvider {
                 .withIssuer(user.getEmail())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
+                .withClaim("id", user.getId())
                 .withClaim("firstName", user.getFirstName())
                 .withClaim("lastName", user.getLastName())
                 .withClaim("role", user.getRole().toString())
@@ -58,6 +59,7 @@ public class UserAuthProvider {
 
         UserDTO userDTO = UserDTO.builder()
                 .email(decodedJWT.getIssuer())
+                .id(decodedJWT.getClaim("id").asLong())
                 .firstName(decodedJWT.getClaim("firstName").asString())
                 .lastName(decodedJWT.getClaim("lastName").asString())
                 .role(decodedJWT.getClaim("role").as(Role.class))

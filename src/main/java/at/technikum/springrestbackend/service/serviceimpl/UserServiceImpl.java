@@ -60,8 +60,12 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException();
         }
 
-        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(user.getPassword())));
+        user.setPassword(getEncode(user.getPassword()));
         return userDao.save(user);
+    }
+
+    private String getEncode(String password ) {
+        return passwordEncoder.encode(CharBuffer.wrap(password));
     }
 
     @Override
@@ -78,12 +82,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(Long userId, User user) {
-        return userDao.findById(userId).map(u -> {
-            u.setFirstName(user.getFirstName());
-            u.setLastName(user.getLastName());
-            u.setEmail(user.getEmail());
-            u.setPassword(user.getPassword());
-            return userDao.save(u);
+        return userDao.findById(userId).map(existingUser -> {
+            if (user.getFirstName() != null) {
+                existingUser.setFirstName(user.getFirstName());
+            }
+
+            if (user.getLastName() != null) {
+                existingUser.setLastName(user.getLastName());
+            }
+
+            if (user.getEmail() != null) {
+                existingUser.setEmail(user.getEmail());
+            }
+
+            if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+                existingUser.setPassword(getEncode(user.getPassword()));
+            }
+
+            return userDao.save(existingUser);
         }).orElseThrow(UserNotFoundException::new);
     }
+
 }
