@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -27,4 +28,11 @@ public class UserStatistic extends AbstractEntity {
 
     @Column(name = "points", nullable = false)
     private int points;
+
+    public List<Quiz> getQuizList() {
+        if (quizList == null) {
+            return new ArrayList<>();
+        }
+        return quizList;
+    }
 }

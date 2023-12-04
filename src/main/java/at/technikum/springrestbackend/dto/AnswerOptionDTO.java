@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 @JsonIgnoreProperties({"question"})
 public class AnswerOptionDTO {
@@ -19,7 +17,4 @@ public class AnswerOptionDTO {
 
     @NotNull(message = "Question cannot be null!")
     private Question question;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

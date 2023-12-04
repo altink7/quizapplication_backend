@@ -28,6 +28,7 @@ public class CorsConfigTest {
 
         ReflectionTestUtils.setField(corsConfig, "frontendWebUrl", "http://example.com");
         ReflectionTestUtils.setField(corsConfig, "allowedMethods", "GET,POST,PUT,DELETE");
+        ReflectionTestUtils.setField(corsConfig, "maxAge", 3600);
     }
 
     @Test
