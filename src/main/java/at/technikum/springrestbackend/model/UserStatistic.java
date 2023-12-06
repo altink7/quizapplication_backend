@@ -19,7 +19,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class UserStatistic extends AbstractEntity {
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private Long userId;
 
     @OneToMany(mappedBy = "userStatistic", cascade = CascadeType.ALL)
