@@ -20,9 +20,6 @@ public class UserDTO {
     @Min(Long.MIN_VALUE)
     private Long id;
 
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) FIXME
-    private String token;
-
     private Gender salutation;
 
     @NotNull(message = "First name cannot be null!")
