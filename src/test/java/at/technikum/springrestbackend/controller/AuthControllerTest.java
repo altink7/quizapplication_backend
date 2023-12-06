@@ -80,7 +80,6 @@ class AuthControllerTest {
         userDTO.setLastName("lastName");
         userDTO.setRole(Role.USER);
         userDTO.setSalutation(Gender.MALE);
-        userDTO.setToken("token");
         userDTO.setUserStatistic(null);
         userDTO.setPassword(null);
         return userDTO;

@@ -21,9 +21,9 @@ Content-Type: application/json
 
 {
   "salutation": "MALE",
-  "firstName": "Sebastian",
-  "lastName": "Grünewald",
-  "email": "sebi@test.com",
+  "firstName": "User",
+  "lastName": "Eins",
+  "email": "user@test.com",
   "password": "secretsecret",
   "country": "AUT",
   "role": "ADMIN",
@@ -54,8 +54,8 @@ POST http://localhost:8081/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "julianhoffmann21@gmail.com",
-  "password": "12345678"
+  "email": "altin@test.com",
+  "password": "secretsecret"
 }
 
 ### Login User Wrong password

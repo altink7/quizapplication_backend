@@ -1,9 +1,5 @@
 package at.technikum.springrestbackend.validator.annotation;
 
-import at.technikum.springrestbackend.model.User;
-import at.technikum.springrestbackend.validator.CustomValidator;
-import at.technikum.springrestbackend.validator.modelvalidator.UserCustomValidator;
-import lombok.SneakyThrows;
 import org.aspectj.lang.JoinPoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +8,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.stereotype.Component;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @Component
 public class ValidationAspectTest {

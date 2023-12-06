@@ -31,7 +31,13 @@ public class QuizServiceImpl implements QuizService {
     private final UserDao userDao;
 
     @Autowired
-    public QuizServiceImpl(UserStatisticDao userStatisticDao, QuizDao quizDao, QuestionDao questionDao, ParticipantDao participantDao, AnswerOptionDao answerOptionDao, AnswerDao answerDao, UserDao userDao) {
+    public QuizServiceImpl(UserStatisticDao userStatisticDao,
+                           QuizDao quizDao,
+                           QuestionDao questionDao,
+                           ParticipantDao participantDao,
+                           AnswerOptionDao answerOptionDao,
+                           AnswerDao answerDao,
+                           UserDao userDao) {
         this.userStatisticDao = userStatisticDao;
         this.quizDao = quizDao;
         this.questionDao = questionDao;

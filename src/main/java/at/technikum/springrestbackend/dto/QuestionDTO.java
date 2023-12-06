@@ -1,6 +1,5 @@
 package at.technikum.springrestbackend.dto;
 
-import at.technikum.springrestbackend.model.AnswerOption;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -3,12 +3,10 @@ package at.technikum.springrestbackend.service.serviceimpl;
 import at.technikum.springrestbackend.exceptions.AnswerNotFoundException;
 import at.technikum.springrestbackend.model.Answer;
 import at.technikum.springrestbackend.repository.AnswerDao;
-import at.technikum.springrestbackend.service.AnswerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
