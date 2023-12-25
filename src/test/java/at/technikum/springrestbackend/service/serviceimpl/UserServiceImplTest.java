@@ -1,25 +1,34 @@
 package at.technikum.springrestbackend.service.serviceimpl;
 
+import at.technikum.springrestbackend.dto.CredentialsDTO;
+import at.technikum.springrestbackend.exceptions.InvalidPasswordException;
 import at.technikum.springrestbackend.exceptions.UserNotFoundException;
+import at.technikum.springrestbackend.model.Gender;
+import at.technikum.springrestbackend.model.ProfilPicture;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.UserDao;
+import at.technikum.springrestbackend.storage.FileStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class UserServiceImplTest {
 
@@ -28,6 +37,9 @@ public class UserServiceImplTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private FileStorage fileStorage;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -136,11 +148,99 @@ public class UserServiceImplTest {
     }
 
     @Test
+    void testUpdateUserNotNull() {
+        Long userId = 1L;
+        User originalUser = new User();
+        originalUser.setFirstName("firstName");
+        originalUser.setLastName("lastName");
+        originalUser.setSalutation(Gender.MALE);
+        originalUser.setEmail("email@email.at");
+        originalUser.setCountry("Austria");
+        originalUser.setPassword("secret");
+
+        when(userDao.findById(userId)).thenReturn(Optional.of(originalUser));
+        when(userDao.save(originalUser)).thenReturn(originalUser);
+
+        User result = userService.updateUser(userId, originalUser);
+
+        assertThat(result, is(originalUser));
+    }
+
+    @Test
     void testUpdateUserThrowsException() {
         Long userId = 1L;
         User updatedUser = new User();
         when(userDao.findById(userId)).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> userService.updateUser(userId, updatedUser));
+    }
+
+
+    @Test
+    void testUploadProfilePicture() {
+        Long userId = 1L;
+        User user = new User();
+        user.setProfilPicture(new ProfilPicture());
+        MockMultipartFile file = new MockMultipartFile(
+                "file",
+                "test.txt",
+                "text/plain",
+                "Test file content".getBytes()
+        );
+
+        when(userDao.findById(anyLong())).thenReturn(Optional.of(user));
+        when(fileStorage.upload(file)).thenReturn("fileKey");
+
+        assertThrows(UserNotFoundException.class, () -> userService.uploadProfilePicture(file, userId));
+    }
+
+    @Test
+    void testGetProfilePicture() {
+        Long userId = 1L;
+        User user = new User();
+        ProfilPicture profilPicture = new ProfilPicture();
+        profilPicture.setExternalId("fileKey");
+        profilPicture.setName("test.txt");
+        profilPicture.setContentType("image/jpeg");
+        user.setProfilPicture(profilPicture);
+        InputStream inputStream = mock(InputStream.class);
+
+        when(userDao.findById(userId)).thenReturn(Optional.of(user));
+        when(fileStorage.load("fileKey")).thenReturn(inputStream);
+
+        Map<Resource, MediaType> result = userService.getProfilePicture(userId);
+
+        assertThat(result, hasKey(instanceOf(InputStreamResource.class)));
+        assertThat(result, hasValue(MediaType.IMAGE_JPEG));
+    }
+
+    @Test
+    void testLoginThrowsExceptionWhenUserNotFound() {
+        String email = "test@example.com";
+        String password = "password";
+
+        CredentialsDTO credentialsDTO = new CredentialsDTO();
+        credentialsDTO.setEmail(email);
+        credentialsDTO.setPassword(password.toCharArray());
+
+        when(userDao.findByEmail(email)).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> userService.login(credentialsDTO));
+    }
+
+    @Test
+    void testLoginThrowsExceptionWhenInvalidPassword() {
+        String email = "test@example.com";
+        String password = "password";
+        User user = new User();
+        user.setPassword(passwordEncoder.encode("wrongPassword"));
+
+        CredentialsDTO credentialsDTO = new CredentialsDTO();
+        credentialsDTO.setEmail(email);
+        credentialsDTO.setPassword(password.toCharArray());
+
+        when(userDao.findByEmail(email)).thenReturn(Optional.of(user));
+
+        assertThrows(InvalidPasswordException.class, () -> userService.login(credentialsDTO));
     }
 }

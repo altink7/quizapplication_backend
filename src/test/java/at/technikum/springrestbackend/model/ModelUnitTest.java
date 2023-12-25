@@ -23,7 +23,8 @@ class ModelUnitTest {
                 Quiz.class,
                 User.class,
                 UserStatistic.class,
-                Participant.class
+                Participant.class,
+                ProfilPicture.class
         );
     }
 }

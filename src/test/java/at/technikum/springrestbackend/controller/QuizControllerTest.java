@@ -86,7 +86,7 @@ class QuizControllerTest {
         Category category = Category.SCIENCE;
         when(quizService.getQuizzesByCategory(category)).thenReturn(Collections.emptyList());
 
-        ResponseEntity<List<QuizDTO>> response = quizController.getQuizByCategory(category);
+        quizController.getQuizByCategory(category);
 
         verify(quizService, times(1)).getQuizzesByCategory(category);
         verifyNoInteractions(mapper);
@@ -200,5 +200,33 @@ class QuizControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(quizService, times(1)).getQuizById(quizId);
         verify(mapper, times(1)).mapToDTO(any(Participant.class), eq(ParticipantDTO.class));
+    }
+
+    @Test
+    void testGetAllQuizzesByCreatorId() {
+        Long creatorId = 1L;
+        List<Quiz> quizzes = Collections.singletonList(new Quiz());
+        when(quizService.getAllQuizzesByCreatorId(creatorId)).thenReturn(quizzes);
+        when(mapper.mapToDTO(any(Quiz.class), eq(QuizDTO.class))).thenReturn(new QuizDTO());
+
+        ResponseEntity<List<QuizDTO>> response = quizController.getAllQuizzesByCreatorId(creatorId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(quizService, times(1)).getAllQuizzesByCreatorId(creatorId);
+        verify(mapper, times(1)).mapToDTO(any(Quiz.class), eq(QuizDTO.class));
+    }
+
+    @Test
+    void testGetAllQuizzesByCreatorIdAndQuizId404Error() {
+        Long creatorId = 1L;
+        Long quizId = 1L;
+        Quiz quiz = new Quiz();
+        when(quizService.getQuizById(quizId)).thenReturn(quiz);
+        when(mapper.mapToDTO(quiz, QuizDTO.class)).thenReturn(new QuizDTO());
+
+        quizController.getAllQuizzesByCreatorIdAndQuizId(quizId, creatorId);
+
+        verify(quizService, times(0)).getQuizById(quizId);
+        verify(mapper, times(0)).mapToDTO(quiz, QuizDTO.class);
     }
 }

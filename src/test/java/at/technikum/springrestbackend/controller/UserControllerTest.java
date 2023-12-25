@@ -1,4 +1,5 @@
 package at.technikum.springrestbackend.controller;
+
 import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.UserDTO;
 import at.technikum.springrestbackend.model.User;
@@ -168,5 +169,14 @@ class UserControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         verify(userService, times(1)).deleteUser(userId);
+    }
+
+    @Test
+    void testUploadProfilePicture() {
+        when(userService.uploadProfilePicture(any(), any())).thenReturn(new User());
+
+        ResponseEntity<User> response = userController.uploadProfilePicture(null, 1L);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }
