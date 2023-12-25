@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.List;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Getter
 @Setter
 @ToString
@@ -46,5 +47,9 @@ public class User extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userStatistic_id")
     private UserStatistic userStatistic;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profilPicture_id")
+    private ProfilPicture profilPicture;
 
 }

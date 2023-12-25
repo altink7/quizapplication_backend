@@ -9,13 +9,17 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * REST Controller for managing users.
@@ -99,4 +103,29 @@ public class UserController extends Controller {
     public ResponseEntity<Void> deleteUser(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId) {
         return userService.deleteUser(userId) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();//204
     }
+
+
+    /**
+     * Upload a profile picture for a user.
+     * @param userId The ID of the user to upload the profile picture for.
+     */
+    @PostMapping("/{userId}/profile-picture")
+    public ResponseEntity<User> uploadProfilePicture(@RequestParam("file") MultipartFile file, @PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId) {
+        return ResponseEntity.ok(userService.uploadProfilePicture(file, userId));
+    }
+
+    /**
+     * Get a profile picture for a user.
+     * @param userId The ID of the user to get the profile picture for.
+     * @return A ResponseEntity containing the profile picture if successful, or a "not found" response if the user was not found.
+     */
+    @GetMapping("/{userId}/profile-picture")
+    public ResponseEntity<Resource> getProfilePicture(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId) {
+        Map<Resource, MediaType> profilePicture = userService.getProfilePicture(userId);
+        MediaType mediaType = profilePicture.values().stream().findFirst().orElseThrow();
+        Resource resource = profilePicture.keySet().stream().findFirst().orElseThrow();
+
+        return ResponseEntity.ok().contentType(mediaType).body(resource);
+    }
+
 }

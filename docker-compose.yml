@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 
 services:
   mariadb:
@@ -16,6 +16,20 @@ services:
       - quizapplication
     volumes:
       - mariadb_data:/var/lib/mysql
+
+  minio:
+    image: bitnami/minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadminpw
+      MINIO_DEFAULT_BUCKETS: files
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - quizapplication
 
   tomcat:
     image: tomcat:latest
@@ -35,3 +49,4 @@ networks:
 
 volumes:
   mariadb_data:
+  minio_data:

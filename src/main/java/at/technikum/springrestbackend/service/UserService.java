@@ -2,9 +2,13 @@ package at.technikum.springrestbackend.service;
 
 import at.technikum.springrestbackend.dto.CredentialsDTO;
 import at.technikum.springrestbackend.model.User;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface UserService {
@@ -51,7 +55,7 @@ public interface UserService {
      * Login
      *
      * @param credentialsDTO the DTO with all credentials
-     * @return the logged in User
+     * @return the logged-in User
      */
     User login(CredentialsDTO credentialsDTO);
 
@@ -64,4 +68,7 @@ public interface UserService {
      */
     User updateUser(Long userId, User user);
 
+    User uploadProfilePicture(MultipartFile file, Long userId);
+
+    Map<Resource, MediaType> getProfilePicture(Long userId);
 }

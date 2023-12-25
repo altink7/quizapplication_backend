@@ -4,15 +4,23 @@ import at.technikum.springrestbackend.dto.CredentialsDTO;
 import at.technikum.springrestbackend.exceptions.InvalidPasswordException;
 import at.technikum.springrestbackend.exceptions.UserAlreadyExistsException;
 import at.technikum.springrestbackend.exceptions.UserNotFoundException;
+import at.technikum.springrestbackend.model.ProfilPicture;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.UserDao;
 import at.technikum.springrestbackend.service.UserService;
+import at.technikum.springrestbackend.storage.FileStorage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.nio.CharBuffer;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -22,12 +30,13 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
+    private final FileStorage fileStorage;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder, FileStorage fileStorage) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
-
+        this.fileStorage = fileStorage;
     }
 
     @Override
@@ -111,4 +120,26 @@ public class UserServiceImpl implements UserService {
         }).orElseThrow(UserNotFoundException::new);
     }
 
+    @Override
+    public User uploadProfilePicture(MultipartFile file, Long userId) {
+        String keyId = fileStorage.upload(file);
+        ProfilPicture profilPicture = new ProfilPicture();
+        profilPicture.setName(file.getOriginalFilename());
+        profilPicture.setExternalId(keyId);
+        profilPicture.setContentType(file.getContentType());
+
+        return userDao.findById(userId).map(user -> {
+            user.setProfilPicture(profilPicture);
+            return userDao.save(user);
+        }).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public Map<Resource, MediaType> getProfilePicture(Long userId) {
+        User user = userDao.findById(userId).orElseThrow(UserNotFoundException::new);
+        InputStream stream = fileStorage.load(user.getProfilPicture().getExternalId());
+        MediaType mediaType = MediaType.parseMediaType(user.getProfilPicture().getContentType());
+
+        return Map.of(new InputStreamResource(stream), mediaType);
+    }
 }
