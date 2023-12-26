@@ -8,6 +8,7 @@ import at.technikum.springrestbackend.model.Question;
 import at.technikum.springrestbackend.model.Quiz;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -82,5 +83,14 @@ public interface QuizService {
      * @return the list of quizzes
      */
     List<Quiz> getAllQuizzesByCreatorId(Long creatorId);
+
+    /**
+     *  Update the quiz start date and duration
+     * @param id the quiz id
+     * @param parse the start date
+     * @param duration the duration
+     * @return the updated quiz
+     */
+    Quiz updateQuizStartDateAndDuration(Long id, LocalDate parse, int duration);
 
 }

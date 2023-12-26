@@ -21,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.time.LocalDate;
 
 /**
  * REST Controller for managing quizzes.
@@ -138,6 +139,9 @@ public class QuizController extends Controller {
         return ResponseEntity.ok(quizService.sortParticipantsByScoreAndTime(dtoList));
     }
 
+    /**
+     * Endpoint to get all quizzes by creator id.
+     */
     @GetMapping("/all/creator/{creatorId}")
         public ResponseEntity<List<QuizDTO>> getAllQuizzesByCreatorId(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long creatorId) {
         List<Quiz> quizzes = quizService.getAllQuizzesByCreatorId(creatorId);
@@ -149,6 +153,9 @@ public class QuizController extends Controller {
         return ResponseEntity.ok(quizzes.stream().map(quiz -> mapper.mapToDTO(quiz, QuizDTO.class)).toList());
     }
 
+    /**
+     * Endpoint to get all quizzes by creator id and quiz id.
+     */
     @GetMapping("/{quizId}/creator/{creatorId}")
     public ResponseEntity<QuizDTO> getAllQuizzesByCreatorIdAndQuizId(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long creatorId, @PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long quizId) {
         List<Quiz> quizzes = quizService.getAllQuizzesByCreatorId(creatorId);
@@ -159,6 +166,20 @@ public class QuizController extends Controller {
         }
 
         return ResponseEntity.ok(mapper.mapToDTO(quizById, QuizDTO.class));
+    }
+
+    /**
+     * Endpoint to update the start date and duration of a quiz.
+     *
+     * @param id The ID of the quiz.
+     * @param startDate The new start date.
+     * @param duration The new duration.
+     * @return A ResponseEntity containing the updated quiz if successful, or a "not found" response.
+     */
+    @PutMapping("/{id}/startDate/{startDate}/duration/{duration}")
+    public ResponseEntity<QuizDTO> updateQuizStartDateAndDuration(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long id, @PathVariable String startDate, @PathVariable int duration) {
+        Quiz quiz = quizService.updateQuizStartDateAndDuration(id, LocalDate.parse(startDate), duration);
+        return ResponseEntity.ok(mapper.mapToDTO(quiz, QuizDTO.class));
     }
 
 }
