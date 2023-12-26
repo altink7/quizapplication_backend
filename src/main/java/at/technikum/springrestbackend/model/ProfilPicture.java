@@ -9,10 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProfilPicture {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private long id;
+public class ProfilPicture extends AbstractEntity{
 
     @OneToOne(mappedBy = "profilPicture")
     private User user;
