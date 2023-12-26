@@ -25,6 +25,9 @@ public class User extends AbstractEntity {
     @Column(name = "salutation")
     private Gender salutation;
 
+    @Column(name = "other_salutation_detail")
+    private String otherSalutationDetail;
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
 

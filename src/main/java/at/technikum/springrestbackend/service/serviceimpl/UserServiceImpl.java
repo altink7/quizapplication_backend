@@ -22,6 +22,8 @@ import java.nio.CharBuffer;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import at.technikum.springrestbackend.model.Gender;
+
 
 /**
  * Implementation of the UserService interface
@@ -102,6 +104,9 @@ public class UserServiceImpl implements UserService {
 
             if (user.getSalutation() != null) {
                 existingUser.setSalutation(user.getSalutation());
+                if (user.getSalutation().equals(Gender.OTHER) && user.getOtherSalutationDetail() != null) {
+                    existingUser.setOtherSalutationDetail(user.getOtherSalutationDetail());
+                }
             }
 
             if (user.getEmail() != null) {
