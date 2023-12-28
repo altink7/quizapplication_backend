@@ -1,6 +1,8 @@
 package at.technikum.springrestbackend.service.serviceimpl;
 
+import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.CredentialsDTO;
+import at.technikum.springrestbackend.dto.UserDTO;
 import at.technikum.springrestbackend.exceptions.InvalidPasswordException;
 import at.technikum.springrestbackend.exceptions.UserNotFoundException;
 import at.technikum.springrestbackend.model.Gender;
@@ -8,6 +10,7 @@ import at.technikum.springrestbackend.model.ProfilPicture;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.UserDao;
 import at.technikum.springrestbackend.storage.FileStorage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,6 +21,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.List;
@@ -40,6 +44,12 @@ public class UserServiceImplTest {
 
     @Mock
     private FileStorage fileStorage;
+
+    @Mock
+    private ObjectMapper objectMapper;
+
+    @Mock
+    private InternalModelMapper mapper;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -242,5 +252,26 @@ public class UserServiceImplTest {
         when(userDao.findByEmail(email)).thenReturn(Optional.of(user));
 
         assertThrows(InvalidPasswordException.class, () -> userService.login(credentialsDTO));
+    }
+
+    @Test
+    void testGetUpdatedUser() {
+        Long userId = 1L;
+        User originalUser = new User();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName("John");
+        userDTO.setLastName("Doe");
+        userDTO.setCountry("USA");
+        Map<String, Object> requestMap = Map.of("user", userDTO, "file", "image/png12:12;12:12base64,encodedfile");
+
+        when(userDao.findById(userId)).thenReturn(Optional.of(originalUser));
+        when(fileStorage.upload(any(MultipartFile.class))).thenReturn("fileKey");
+        when(userDao.save(originalUser)).thenReturn(originalUser);
+        when(mapper.mapToEntity(userDTO, User.class)).thenReturn(originalUser);
+        when(objectMapper.convertValue(requestMap.get("user"), UserDTO.class)).thenReturn(userDTO);
+
+        User result = userService.getUpdatedUser(userId, requestMap);
+
+        assertNotNull(result);
     }
 }
