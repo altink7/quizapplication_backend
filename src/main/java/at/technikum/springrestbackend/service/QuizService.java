@@ -74,6 +74,7 @@ public interface QuizService {
     /**
      * Randomize order of questions and answers
      */
+    @SuppressWarnings("unused")
     QuizDTO randomizeQuiz(QuizDTO quizDTO);
 
     /**

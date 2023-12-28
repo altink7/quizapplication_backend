@@ -14,6 +14,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.Objects;
 
 @Log4j2
 @ControllerAdvice
@@ -54,7 +55,7 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<String> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
-        String errorMessage = "Invalid parameter type: " + ex.getName() + ". Value '" + ex.getValue() + "' should be of type " + ex.getRequiredType().getSimpleName();
+        String errorMessage = "Invalid parameter type: " + ex.getName() + ". Value '" + ex.getValue() + "' should be of type " + Objects.requireNonNull(ex.getRequiredType()).getSimpleName();
         log.error(errorMessage);
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }

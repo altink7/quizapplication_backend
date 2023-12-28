@@ -34,9 +34,7 @@ public class UserCustomValidatorTest {
     public void testValidateNullEmail() {
         User user = new User();
 
-        ValidationException exception = assertThrows(ValidationException.class, () -> {
-            userCustomValidator.validate(user);
-        });
+        ValidationException exception = assertThrows(ValidationException.class, () -> userCustomValidator.validate(user));
 
         List<ErrorMessage> errorMessages = (List<ErrorMessage>) exception.getErrorMessages();
         assertThat(errorMessages.size(), is(1));
