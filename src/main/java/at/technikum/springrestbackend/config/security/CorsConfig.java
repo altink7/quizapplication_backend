@@ -32,6 +32,7 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                         .allowedOrigins(frontendWebUrl)
                         .allowedMethods(allowedMethods.split(","))
+                        .allowedHeaders("*")
                         .maxAge(maxAge);
             }
         };

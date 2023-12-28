@@ -36,6 +36,7 @@ public class CorsConfigTest {
         when(corsRegistry.addMapping("/api/**")).thenReturn(corsRegistration);
         when(corsRegistration.allowedOrigins("http://example.com")).thenReturn(corsRegistration);
         when(corsRegistration.allowedMethods("GET", "POST", "PUT", "DELETE")).thenReturn(corsRegistration);
+        when(corsRegistration.allowedHeaders("*")).thenReturn(corsRegistration);
 
         WebMvcConfigurer configurer = corsConfig.corsConfigurer();
         configurer.addCorsMappings(corsRegistry);

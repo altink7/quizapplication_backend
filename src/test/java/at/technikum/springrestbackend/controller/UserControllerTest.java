@@ -128,12 +128,10 @@ class UserControllerTest {
         when(userService.updateUser(userId, updatedUser)).thenReturn(updatedUser);
         when(mapper.mapToDTO(updatedUser, UserDTO.class)).thenReturn(new UserDTO());
 
-        ResponseEntity<UserDTO> response = userController.updateUser(userId, userDTO);
+        ResponseEntity<UserDTO> response = userController.updateUser(userId, null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        verify(mapper, times(1)).mapToEntity(userDTO, User.class);
-        verify(userService, times(1)).updateUser(userId, updatedUser);
-        verify(mapper, times(1)).mapToDTO(updatedUser, UserDTO.class);
+        verify(userService, times(1)).getUpdatedUser(anyLong(), any());
     }
 
     @Test
@@ -143,10 +141,9 @@ class UserControllerTest {
         when(mapper.mapToEntity(userDTO, User.class)).thenReturn(new User());
         when(userService.updateUser(userId, new User())).thenReturn(null);
 
-        ResponseEntity<UserDTO> response = userController.updateUser(userId, userDTO);
+        ResponseEntity<UserDTO> response = userController.updateUser(userId, null);
 
         assertNull(response.getBody());
-        verify(mapper, times(1)).mapToEntity(userDTO, User.class);
     }
 
     @Test
@@ -169,14 +166,5 @@ class UserControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         verify(userService, times(1)).deleteUser(userId);
-    }
-
-    @Test
-    void testUploadProfilePicture() {
-        when(userService.uploadProfilePicture(any(), any())).thenReturn(new User());
-
-        ResponseEntity<User> response = userController.uploadProfilePicture(null, 1L);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }

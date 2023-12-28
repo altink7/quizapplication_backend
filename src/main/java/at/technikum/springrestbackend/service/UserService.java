@@ -68,7 +68,7 @@ public interface UserService {
      */
     User updateUser(Long userId, User user);
 
-    User uploadProfilePicture(MultipartFile file, Long userId);
+    User getUpdatedUser(Long userId, Map<String, Object> requestMap);
 
     Map<Resource, MediaType> getProfilePicture(Long userId);
 }

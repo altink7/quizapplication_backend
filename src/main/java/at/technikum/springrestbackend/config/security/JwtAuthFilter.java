@@ -10,11 +10,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserAuthProvider userAuthProvider;
+    private static final Set<String> EXCLUSION_PATHS = new HashSet<>();
+
+    static {
+        EXCLUSION_PATHS.add("/api/auth/login");
+        EXCLUSION_PATHS.add("/api/auth/register");
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -27,7 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 try {
                     if ("GET".equals(request.getMethod())) {
                         SecurityContextHolder.getContext().setAuthentication(userAuthProvider.validateToken(authElements[1]));
-                    } else if (!"/api/auth/login".equals(request.getRequestURI()) && !"/api/auth/register".equals(request.getRequestURI())) {
+                    } else if (isNotExcludedFromAuth(request)) {
                         SecurityContextHolder.getContext().setAuthentication(userAuthProvider.validateTokenStrongly(authElements[1]));
                     }
                 } catch (RuntimeException e) {
@@ -37,5 +45,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private static boolean isNotExcludedFromAuth(HttpServletRequest request) {
+        return !EXCLUSION_PATHS.contains(request.getRequestURI());
     }
 }

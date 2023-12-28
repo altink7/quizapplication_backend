@@ -4,7 +4,6 @@ import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.UserDTO;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -72,25 +70,8 @@ public class UserController extends Controller {
                 .map(user -> mapper.mapToDTO(user, UserDTO.class))
                 .toList();
 
-        if (CollectionUtils.isEmpty(userDTOs)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(userDTOs);
-    }
-
-    /**
-     * Update a user.
-     *
-     * @param userId  The ID of the user to update.
-     * @param userDTO The user DTO to update.
-     * @return A ResponseEntity containing the updated user's DTO if successful, or a "not found" response if the user was not found.
-     */
-    @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId, @Valid @RequestBody UserDTO userDTO) {
-        User updatedUser = userService.updateUser(userId, mapper.mapToEntity(userDTO, User.class));
-        UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);
-        return ResponseEntity.ok(updatedUserDTO);
+        return CollectionUtils.isEmpty(userDTOs) ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(userDTOs);
     }
 
     /**
@@ -106,12 +87,18 @@ public class UserController extends Controller {
 
 
     /**
-     * Upload a profile picture for a user.
-     * @param userId The ID of the user to upload the profile picture for.
+     * Update a user.
+     *
+     * @param userId  The ID of the user to update.
+     * @return A ResponseEntity containing the updated user's DTO if successful, or a "not found" response if the user was not found.
      */
-    @PostMapping("/{userId}/profile-picture")
-    public ResponseEntity<User> uploadProfilePicture(@RequestParam("file") MultipartFile file, @PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId) {
-        return ResponseEntity.ok(userService.uploadProfilePicture(file, userId));
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDTO> updateUser(
+            @PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId,
+            @RequestBody Map<String, Object> requestMap) {
+        User updatedUser = userService.getUpdatedUser(userId, requestMap);
+        UserDTO updatedUserDTO = mapper.mapToDTO(updatedUser, UserDTO.class);
+        return ResponseEntity.ok(updatedUserDTO);
     }
 
     /**
@@ -127,5 +114,4 @@ public class UserController extends Controller {
 
         return ResponseEntity.ok().contentType(mediaType).body(resource);
     }
-
 }
