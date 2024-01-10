@@ -127,6 +127,10 @@ public class UserServiceImpl implements UserService {
                 existingUser.setCountry(user.getCountry());
             }
 
+            if (user.getRole() != null) {
+                existingUser.setRole(user.getRole());
+            }
+
             return userDao.save(existingUser);
         }).orElseThrow(UserNotFoundException::new);
     }

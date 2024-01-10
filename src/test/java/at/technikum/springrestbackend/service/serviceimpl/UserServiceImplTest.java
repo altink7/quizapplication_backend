@@ -7,6 +7,7 @@ import at.technikum.springrestbackend.exceptions.InvalidPasswordException;
 import at.technikum.springrestbackend.exceptions.UserNotFoundException;
 import at.technikum.springrestbackend.model.Gender;
 import at.technikum.springrestbackend.model.ProfilPicture;
+import at.technikum.springrestbackend.model.Role;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.UserDao;
 import at.technikum.springrestbackend.storage.FileStorage;
@@ -167,6 +168,7 @@ public class UserServiceImplTest {
         originalUser.setEmail("email@email.at");
         originalUser.setCountry("Austria");
         originalUser.setPassword("secret");
+        originalUser.setRole(Role.USER);
 
         when(userDao.findById(userId)).thenReturn(Optional.of(originalUser));
         when(userDao.save(originalUser)).thenReturn(originalUser);
