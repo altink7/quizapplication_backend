@@ -147,10 +147,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<Resource, MediaType> getProfilePicture(Long userId) {
         User user = userDao.findById(userId).orElseThrow(UserNotFoundException::new);
-        InputStream stream = fileStorage.load(user.getProfilPicture().getExternalId());
-        MediaType mediaType = MediaType.parseMediaType(user.getProfilPicture().getContentType());
+        if(user.getProfilPicture() != null && user.getProfilPicture().getExternalId() != null) {
+            InputStream stream = fileStorage.load(user.getProfilPicture().getExternalId());
+            MediaType mediaType = MediaType.parseMediaType(user.getProfilPicture().getContentType());
 
-        return Map.of(new InputStreamResource(stream), mediaType);
+            return Map.of(new InputStreamResource(stream), mediaType);
+        }
+        return Collections.emptyMap();
     }
 
     protected void uploadProfilePicture(MultipartFile file, Long userId) {

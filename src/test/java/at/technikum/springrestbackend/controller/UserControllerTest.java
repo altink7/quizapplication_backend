@@ -8,8 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
@@ -164,5 +167,28 @@ class UserControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         verify(userService, times(1)).deleteUser(userId);
+    }
+
+    @Test
+    void testGetProfilePictureEmpty() {
+        Long userId = 1L;
+        when(userService.getProfilePicture(userId)).thenReturn(Collections.emptyMap());
+
+        ResponseEntity<?> response = userController.getProfilePicture(userId);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        verify(userService, times(1)).getProfilePicture(userId);
+    }
+
+    @Test
+    void testGetProfilePicture() {
+        Long userId = 1L;
+        Resource resource = Mockito.mock(Resource.class);
+        when(userService.getProfilePicture(userId)).thenReturn(Collections.singletonMap(resource, MediaType.IMAGE_JPEG));
+
+        ResponseEntity<?> response = userController.getProfilePicture(userId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        verify(userService, times(1)).getProfilePicture(userId);
     }
 }

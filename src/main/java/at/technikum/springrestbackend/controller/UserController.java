@@ -109,8 +109,12 @@ public class UserController extends Controller {
     @GetMapping("/{userId}/profile-picture")
     public ResponseEntity<Resource> getProfilePicture(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long userId) {
         Map<Resource, MediaType> profilePicture = userService.getProfilePicture(userId);
-        MediaType mediaType = profilePicture.values().stream().findFirst().orElseThrow();
-        Resource resource = profilePicture.keySet().stream().findFirst().orElseThrow();
+        MediaType mediaType = profilePicture.values().stream().findFirst().orElse(null);
+        Resource resource = profilePicture.keySet().stream().findFirst().orElse(null);
+
+        if (mediaType == null) {
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.ok().contentType(mediaType).body(resource);
     }
