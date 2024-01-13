@@ -25,11 +25,11 @@ public class UserDTO {
     private String otherSalutationDetail;
 
     @NotNull(message = "First name cannot be null!")
-    @Size(min = 2, max = 20, message = "First Name must be between 4 and 20 characters long!")
+    @Size(min = 2, max = 20, message = "First Name must be between 2 and 20 characters long!")
     private String firstName;
 
     @NotNull(message = "Last name cannot be null!")
-    @Size(min = 2, max = 20, message = "First Name must be between 4 and 20 characters long!")
+    @Size(min = 2, max = 20, message = "First Name must be between 2 and 20 characters long!")
     private String lastName;
 
     @NotNull(message = "Email cannot be null!")
