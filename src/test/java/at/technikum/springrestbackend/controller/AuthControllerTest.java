@@ -75,7 +75,7 @@ class AuthControllerTest {
 
     private static UserDTO getUserDTO() {
         UserDTO userDTO = new UserDTO();
-        userDTO.setEmail("email@mail.ccom");
+        userDTO.setEmailOrUsername("email@mail.ccom");
         userDTO.setFirstName("firstName");
         userDTO.setLastName("lastName");
         userDTO.setRole(Role.USER);
@@ -87,7 +87,7 @@ class AuthControllerTest {
 
     private CredentialsDTO getCredentialsDTO() {
         CredentialsDTO credentialsDTO = new CredentialsDTO();
-        credentialsDTO.setEmail("email@mail.com");
+        credentialsDTO.setEmailOrUsername("email@mail.com");
         credentialsDTO.setPassword(null);
         return credentialsDTO;
     }

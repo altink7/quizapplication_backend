@@ -94,9 +94,9 @@ public class UserServiceImplTest {
     void testGetUserByEmail() {
         String email = "test@example.com";
         User user = new User();
-        when(userDao.findByEmail(email)).thenReturn(Optional.of(user));
+        when(userDao.findByEmailOrUsername(email)).thenReturn(Optional.of(user));
 
-        User result = userService.getUserByEmail(email);
+        User result = userService.getUserByEmailOrUsername(email);
 
         assertThat(result, is(user));
     }
@@ -104,9 +104,9 @@ public class UserServiceImplTest {
     @Test
     void testGetUserByEmailThrowsException() {
         String email = "test@example.com";
-        when(userDao.findByEmail(email)).thenReturn(Optional.empty());
+        when(userDao.findByEmailOrUsername(email)).thenReturn(Optional.empty());
 
-        assertThrows(UserNotFoundException.class, () -> userService.getUserByEmail(email));
+        assertThrows(UserNotFoundException.class, () -> userService.getUserByEmailOrUsername(email));
     }
 
     @Test
@@ -165,7 +165,7 @@ public class UserServiceImplTest {
         originalUser.setFirstName("firstName");
         originalUser.setLastName("lastName");
         originalUser.setSalutation(Gender.MALE);
-        originalUser.setEmail("email@email.at");
+        originalUser.setEmailOrUsername("email@email.at");
         originalUser.setCountry("Austria");
         originalUser.setPassword("secret");
         originalUser.setRole(Role.USER);
@@ -232,10 +232,10 @@ public class UserServiceImplTest {
         String password = "password";
 
         CredentialsDTO credentialsDTO = new CredentialsDTO();
-        credentialsDTO.setEmail(email);
+        credentialsDTO.setEmailOrUsername(email);
         credentialsDTO.setPassword(password.toCharArray());
 
-        when(userDao.findByEmail(email)).thenReturn(Optional.empty());
+        when(userDao.findByEmailOrUsername(email)).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> userService.login(credentialsDTO));
     }
@@ -248,10 +248,10 @@ public class UserServiceImplTest {
         user.setPassword(passwordEncoder.encode("wrongPassword"));
 
         CredentialsDTO credentialsDTO = new CredentialsDTO();
-        credentialsDTO.setEmail(email);
+        credentialsDTO.setEmailOrUsername(email);
         credentialsDTO.setPassword(password.toCharArray());
 
-        when(userDao.findByEmail(email)).thenReturn(Optional.of(user));
+        when(userDao.findByEmailOrUsername(email)).thenReturn(Optional.of(user));
 
         assertThrows(InvalidPasswordException.class, () -> userService.login(credentialsDTO));
     }

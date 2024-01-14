@@ -58,8 +58,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userDao.findByEmail(email).orElseThrow(UserNotFoundException::new);
+    public User getUserByEmailOrUsername(String email) {
+        return userDao.findByEmailOrUsername(email).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User register(User user) {
-        Optional<User> oUser = userDao.findByEmail(user.getEmail());
+        Optional<User> oUser = userDao.findByEmailOrUsername(user.getEmailOrUsername());
 
         if (oUser.isPresent()) {
             throw new UserAlreadyExistsException();
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(CredentialsDTO credentialsDTO) {
-        User user = userDao.findByEmail(credentialsDTO.getEmail())
+        User user = userDao.findByEmailOrUsername(credentialsDTO.getEmailOrUsername())
                 .orElseThrow(UserNotFoundException::new);
 
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.getPassword()),
@@ -115,8 +115,8 @@ public class UserServiceImpl implements UserService {
                 }
             }
 
-            if (user.getEmail() != null) {
-                existingUser.setEmail(user.getEmail());
+            if (user.getEmailOrUsername() != null) {
+                existingUser.setEmailOrUsername(user.getEmailOrUsername());
             }
 
             if (user.getPassword() != null && !user.getPassword().isEmpty()) {

@@ -67,33 +67,33 @@ class UserControllerTest {
     void testGetUserByEmail() {
         String email = "test@example.com";
         User user = new User();
-        when(userService.getUserByEmail(email)).thenReturn(user);
+        when(userService.getUserByEmailOrUsername(email)).thenReturn(user);
         when(mapper.mapToDTO(user, UserDTO.class)).thenReturn(new UserDTO());
 
-        ResponseEntity<UserDTO> response = userController.getUserByEmail(email);
+        ResponseEntity<UserDTO> response = userController.getUserByEmailOrUsername(email);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        verify(userService, times(1)).getUserByEmail(email);
+        verify(userService, times(1)).getUserByEmailOrUsername(email);
         verify(mapper, times(1)).mapToDTO(user, UserDTO.class);
     }
 
     @Test
     void testGetUserByEmailInvalidEmail() {
         String email = "invalid-email";
-        ResponseEntity<UserDTO> response = userController.getUserByEmail(email);
+        ResponseEntity<UserDTO> response = userController.getUserByEmailOrUsername(email);
         assertNull(response.getBody());
     }
 
     @Test
     void testGetUserByEmailNotFound() {
         String email = "test@example.com";
-        when(userService.getUserByEmail(email)).thenReturn(null);
+        when(userService.getUserByEmailOrUsername(email)).thenReturn(null);
 
-        ResponseEntity<UserDTO> response = userController.getUserByEmail(email);
+        ResponseEntity<UserDTO> response = userController.getUserByEmailOrUsername(email);
 
         assertNull(response.getBody());
-        verify(userService, times(1)).getUserByEmail(email);
+        verify(userService, times(1)).getUserByEmailOrUsername(email);
     }
 
     @Test
