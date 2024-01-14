@@ -20,8 +20,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * REST Controller for managing quizzes.
@@ -157,7 +157,8 @@ public class QuizController extends Controller {
      * Endpoint to get all quizzes by creator id and quiz id.
      */
     @GetMapping("/{quizId}/creator/{creatorId}")
-    public ResponseEntity<QuizDTO> getAllQuizzesByCreatorIdAndQuizId(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long creatorId, @PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long quizId) {
+    public ResponseEntity<QuizDTO> getAllQuizzesByCreatorIdAndQuizId(@PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE)
+                                                                     Long creatorId, @PathVariable @Max(Long.MAX_VALUE) @Min(Long.MIN_VALUE) Long quizId) {
         List<Quiz> quizzes = quizService.getAllQuizzesByCreatorId(creatorId);
         Quiz quizById = quizzes.stream().filter(quiz -> quiz.getId().equals(quizId)).findFirst().orElse(null);
 
