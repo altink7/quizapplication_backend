@@ -42,7 +42,7 @@ public class UserAuthProvider {
         Date validity = new Date(now.getTime() + 3_600_000);
 
         return JWT.create()
-                .withIssuer(user.getEmail())
+                .withIssuer(user.getEmailOrUsername())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .withClaim("id", user.getId())
@@ -58,7 +58,7 @@ public class UserAuthProvider {
         DecodedJWT decodedJWT = verifier.verify(token);
 
         UserDTO userDTO = UserDTO.builder()
-                .email(decodedJWT.getIssuer())
+                .emailOrUsername(decodedJWT.getIssuer())
                 .id(decodedJWT.getClaim("id").asLong())
                 .firstName(decodedJWT.getClaim("firstName").asString())
                 .lastName(decodedJWT.getClaim("lastName").asString())
@@ -73,7 +73,7 @@ public class UserAuthProvider {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
 
-        User user = userDao.findByEmail(decodedJWT.getIssuer())
+        User user = userDao.findByEmailOrUsername(decodedJWT.getIssuer())
                 .orElseThrow(UserNotFoundException::new);
 
         return new UsernamePasswordAuthenticationToken(mapper.mapToDTO(user, UserDTO.class), null, Collections.emptyList());

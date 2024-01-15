@@ -6,7 +6,7 @@ Content-Type: application/json
   "salutation": "MALE",
   "firstName": "Test",
   "lastName": "Altin",
-  "email": "altin@test.com",
+  "emailOrUsername": "altin@test.com",
   "password": "secretsecret",
   "country": "USA",
   "role": "USER",
@@ -23,7 +23,7 @@ Content-Type: application/json
   "salutation": "MALE",
   "firstName": "User",
   "lastName": "Eins",
-  "email": "user@test.com",
+  "emailOrUsername": "username",
   "password": "secretsecret",
   "country": "AUT",
   "role": "ADMIN",
@@ -40,7 +40,7 @@ Content-Type: application/json
   "salutation": "MALE",
   "firstName": "Test",
   "lastName": "Altin",
-  "email": "mail",
+  "emailOrUsername": "ma",
   "password": "secretsecret",
   "country": "USA",
   "role": "USER",
@@ -54,7 +54,7 @@ POST http://localhost:8081/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "altin@test.com",
+  "emailOrUsername": "altin@test.com",
   "password": "secretsecret"
 }
 
@@ -63,7 +63,7 @@ POST http://localhost:8081/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "altin@test.com",
+  "emailOrUsername": "altin@test.com",
   "password": "wrongpassword"
 }
 
@@ -72,7 +72,7 @@ POST http://localhost:8081/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "wrong@mail.com",
+  "emailOrUsername": "wrong@mail.com",
   "password": "wrongpassword"
 }
 
@@ -99,7 +99,7 @@ Content-Type: application/json
   "salutation": "MALE",
   "firstName": "Change",
   "lastName": "Altin",
-  "email": "altin@changeMail.com",
+  "emailOrUsername": "altin@changeMail.com",
   "password": "newsecret",
   "country": "CAN",
   "role": "ADMIN"

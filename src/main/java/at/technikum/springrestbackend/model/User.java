@@ -34,8 +34,8 @@ public class User extends AbstractEntity {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "email", unique = true, nullable = false)
-    private String email;
+    @Column(name = "emailOrUsername", unique = true, nullable = false)
+    private String emailOrUsername;
 
     @Column(name = "password", nullable = false)
     private String password;
