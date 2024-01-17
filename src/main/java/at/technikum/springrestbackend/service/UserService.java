@@ -29,10 +29,10 @@ public interface UserService {
     /**
      * Get a user by email
      *
-     * @param emailOrUsername the email
+     * @param email the email
      * @return the user
      */
-    User getUserByEmailOrUsername(String emailOrUsername);
+    User getUserByEmail(String email);
 
     /**
      * Delete a user by id

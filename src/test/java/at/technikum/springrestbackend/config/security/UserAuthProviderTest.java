@@ -45,7 +45,7 @@ class UserAuthProviderTest {
     @Test
     void createToken() {
         User user = new User();
-        user.setEmailOrUsername("test@example.com");
+        user.setEmail("test@example.com");
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setRole(Role.USER);
@@ -59,7 +59,7 @@ class UserAuthProviderTest {
     void validateTokenStrongly_UserNotFound() {
         String token = createToken(getUserDTO());
 
-        when(userDao.findByEmailOrUsername("nonexistent@example.com")).thenReturn(Optional.empty());
+        when(userDao.findByEmail("nonexistent@example.com")).thenReturn(Optional.empty());
 
         assertThrows(SignatureVerificationException.class, () -> userAuthProvider.validateTokenStrongly(token));
     }
@@ -69,7 +69,7 @@ class UserAuthProviderTest {
         Date validity = new Date(now.getTime() + 3_600_000);
 
         return JWT.create()
-                .withIssuer(userDTO.getEmailOrUsername())
+                .withIssuer(userDTO.getEmail())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .withClaim("firstName", userDTO.getFirstName())
@@ -80,7 +80,7 @@ class UserAuthProviderTest {
 
     private UserDTO getUserDTO() {
         UserDTO userDTO = new UserDTO();
-        userDTO.setEmailOrUsername("email@mail.com");
+        userDTO.setEmail("email@mail.com");
         userDTO.setFirstName("John");
         userDTO.setLastName("Doe");
         userDTO.setRole(Role.USER);
