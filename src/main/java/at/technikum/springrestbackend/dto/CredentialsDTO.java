@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class CredentialsDTO {
-
-    private String emailOrUsername;
+    private String email;
     private char[] password;
 }

@@ -4,7 +4,7 @@ import at.technikum.springrestbackend.config.mapper.InternalModelMapper;
 import at.technikum.springrestbackend.dto.UserDTO;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
-import at.technikum.springrestbackend.validator.UsernameOrEmail;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -50,13 +50,13 @@ public class UserController extends Controller {
     /**
      * Get a user by their email.
      *
-     * @param emailOrUsername The email address of the user.
+     * @param email The email address of the user.
      * @return A ResponseEntity containing the user's DTO if found, or a "not found" response.
      */
-    @GetMapping("/emails/{emailOrUsername}")
-    public ResponseEntity<UserDTO> getUserByEmailOrUsername(@PathVariable @NotNull(message = "Email cannot be null!")
-                                                            @UsernameOrEmail(message = "Not a valid email or username!") String emailOrUsername) {
-        return ResponseEntity.ok(mapper.mapToDTO(userService.getUserByEmailOrUsername(emailOrUsername), UserDTO.class));
+    @GetMapping("/emails/{email}")
+    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable @NotNull(message = "Email cannot be null!")
+                                                  @Email(message = "Not a valid email!") String email) {
+        return ResponseEntity.ok(mapper.mapToDTO(userService.getUserByEmail(email), UserDTO.class));
     }
 
     /**

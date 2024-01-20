@@ -58,8 +58,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmailOrUsername(String email) {
-        return userDao.findByEmailOrUsername(email).orElseThrow(UserNotFoundException::new);
+    public User getUserByEmail(String email) {
+        return userDao.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User register(User user) {
-        Optional<User> oUser = userDao.findByEmailOrUsername(user.getEmailOrUsername());
+        Optional<User> oUser = userDao.findByEmail(user.getEmail());
 
         if (oUser.isPresent()) {
             throw new UserAlreadyExistsException();
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(CredentialsDTO credentialsDTO) {
-        User user = userDao.findByEmailOrUsername(credentialsDTO.getEmailOrUsername())
+        User user = userDao.findByEmail(credentialsDTO.getEmail())
                 .orElseThrow(UserNotFoundException::new);
 
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDTO.getPassword()),
@@ -103,27 +103,34 @@ public class UserServiceImpl implements UserService {
             if (user.getFirstName() != null) {
                 existingUser.setFirstName(user.getFirstName());
             }
+
             if (user.getLastName() != null) {
                 existingUser.setLastName(user.getLastName());
             }
+
             if (user.getSalutation() != null) {
                 existingUser.setSalutation(user.getSalutation());
                 if (user.getSalutation().equals(Gender.OTHER) && user.getOtherSalutationDetail() != null) {
                     existingUser.setOtherSalutationDetail(user.getOtherSalutationDetail());
                 }
             }
-            if (user.getEmailOrUsername() != null) {
-                existingUser.setEmailOrUsername(user.getEmailOrUsername());
+
+            if (user.getEmail() != null) {
+                existingUser.setEmail(user.getEmail());
             }
+
             if (user.getPassword() != null && !user.getPassword().isEmpty()) {
                 existingUser.setPassword(getEncode(user.getPassword()));
             }
+
             if (user.getCountry() != null) {
                 existingUser.setCountry(user.getCountry());
             }
+
             if (user.getRole() != null) {
                 existingUser.setRole(user.getRole());
             }
+
             return userDao.save(existingUser);
         }).orElseThrow(UserNotFoundException::new);
     }
