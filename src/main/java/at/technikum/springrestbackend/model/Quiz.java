@@ -20,10 +20,10 @@ import java.util.List;
 public class Quiz extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "user_id") //FIXME: nullable?
+    @JoinColumn(name = "user_id")
     private User creator;
 
-    @OneToMany(mappedBy = "quiz")
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<Participant> participants;
 
@@ -39,7 +39,7 @@ public class Quiz extends AbstractEntity {
     @JoinColumn(name = "user_statistic_id")
     private UserStatistic userStatistic;
 
-    @Column(name = "start_date") //TODO: setzen der default werte in service
+    @Column(name = "start_date")
     private LocalDate startDate;
 
     @Column(name = "duration")
